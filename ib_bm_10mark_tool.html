@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IB Business Management — 10-Mark Essay Builder</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lora:ital,wght@0,600;1,400&display=swap');
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{--nv:#1a2340;--nm:#243057;--nl:#2e3d6b;--am:#e8a020;--al:#f5c060;--wh:#f8f7f4;--gl:#eceae4;--gm:#b0aaa0;--gt:#5c5850;--rd:#c0392b;--gn:#1e7a4a;--gnl:#d4f0e2;--rdl:#fde8e6;--amb:#fdf3e0}
+  body{font-family:'Inter',sans-serif;background:var(--nv);color:var(--wh);min-height:100vh;padding:0}
+  header{background:var(--nv);border-bottom:2px solid var(--am);padding:20px 32px;display:flex;align-items:baseline;gap:16px}
+  header .ey{font-size:10px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--am)}
+  header h1{font-family:'Lora',serif;font-size:20px;font-weight:600;color:var(--wh)}
+  .pnav{background:var(--nm);padding:0 32px;display:flex;border-bottom:1px solid rgba(255,255,255,.08)}
+  .ptab{padding:14px 24px;font-size:13px;font-weight:600;letter-spacing:.03em;color:var(--gm);cursor:pointer;border-bottom:3px solid transparent;transition:color .2s,border-color .2s;user-select:none;display:flex;align-items:center;gap:8px}
+  .ptab .tn{width:20px;height:20px;border-radius:50%;background:rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;transition:background .2s}
+  .ptab.active{color:var(--wh);border-bottom-color:var(--am)}
+  .ptab.active .tn{background:var(--am);color:var(--nv)}
+  .ptab.done{color:var(--al)}
+  .ptab.done .tn{background:var(--al);color:var(--nv)}
+  .ptab.locked{opacity:.4;cursor:not-allowed}
+  main{max-width:860px;margin:0 auto;padding:36px 24px 60px}
+  .phase{display:none}.phase.active{display:block}
+  .stitle{font-family:'Lora',serif;font-size:22px;color:var(--wh);margin-bottom:6px}
+  .ssub{font-size:13px;color:var(--gm);margin-bottom:28px;line-height:1.6}
+  .wrbox{background:var(--nm);border:1px solid rgba(255,255,255,.1);border-left:4px solid var(--rd);border-radius:8px;padding:20px 24px;margin-bottom:24px}
+  .wrbox .wrlbl{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--rd);margin-bottom:10px}
+  .wrbox p{font-size:14px;line-height:1.75;color:var(--gl);font-style:italic}
+  .qbox{background:var(--nl);border:1px solid rgba(232,160,32,.3);border-radius:8px;padding:16px 20px;margin-bottom:24px}
+  .qbox .ql{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--am);margin-bottom:8px}
+  .qbox p{font-size:14px;color:var(--wh);line-height:1.6}
+  .ctitle{font-size:13px;font-weight:600;color:var(--wh);margin-bottom:12px}
+  .ci{display:flex;align-items:flex-start;gap:12px;padding:12px 16px;background:var(--nm);border:1px solid rgba(255,255,255,.07);border-radius:6px;margin-bottom:8px;cursor:pointer;transition:border-color .2s,background .2s;user-select:none}
+  .ci:hover{border-color:rgba(255,255,255,.18)}
+  .ci.checked{background:rgba(30,122,74,.15);border-color:var(--gn)}
+  .ci.checked .cb{background:var(--gn);border-color:var(--gn)}
+  .ci.checked .cb::after{display:block}
+  .cb{width:18px;height:18px;border:2px solid var(--gm);border-radius:4px;flex-shrink:0;margin-top:1px;position:relative;transition:background .2s,border-color .2s}
+  .cb::after{content:'✓';display:none;position:absolute;top:-2px;left:1px;font-size:12px;color:#fff;font-weight:700}
+  .ci .ct{font-size:13px;line-height:1.55;color:var(--gl)}
+  .ci .cl{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--am);display:block;margin-bottom:3px}
+  .vbox{display:none;margin-top:20px;border-radius:8px;padding:18px 22px}
+  .vbox.show{display:block}
+  .vbox.low{background:var(--rdl);border-left:4px solid var(--rd)}
+  .vbox.mid{background:var(--amb);border-left:4px solid var(--am)}
+  .vbox.high{background:var(--gnl);border-left:4px solid var(--gn)}
+  .vbox .vt{font-size:15px;font-weight:700;margin-bottom:6px}
+  .vbox.low .vt{color:var(--rd)}.vbox.mid .vt{color:#7a5a00}.vbox.high .vt{color:var(--gn)}
+  .vbox .vb{font-size:13px;line-height:1.65;color:#333}
+  .cstep{margin-bottom:20px}
+  .shdr{display:flex;align-items:center;gap:12px;margin-bottom:8px}
+  .sbadge{background:var(--am);color:var(--nv);font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:4px 10px;border-radius:4px;white-space:nowrap}
+  .sq{font-size:13px;font-weight:600;color:var(--wh)}
+  .shint{font-size:12px;color:var(--gm);margin-bottom:8px;font-style:italic;padding-left:2px;line-height:1.5}
+  textarea{width:100%;background:var(--nm);border:1px solid rgba(255,255,255,.12);border-radius:6px;color:var(--wh);font-family:'Inter',sans-serif;font-size:13px;line-height:1.7;padding:12px 14px;resize:vertical;transition:border-color .2s;min-height:70px}
+  textarea:focus{outline:none;border-color:var(--am)}
+  textarea::placeholder{color:var(--gm)}
+  textarea.err{border-color:var(--rd)!important}
+  .tcrow{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px}
+  .tc{padding:6px 12px;border-radius:20px;font-size:12px;font-weight:500;background:var(--nm);border:1px solid rgba(255,255,255,.15);color:var(--gl);cursor:pointer;transition:background .15s,border-color .15s,color .15s;user-select:none}
+  .tc.selected{background:var(--am);border-color:var(--am);color:var(--nv);font-weight:700}
+  .p2note{background:var(--nl);border:1px solid rgba(232,160,32,.25);border-radius:6px;padding:12px 16px;font-size:12px;color:var(--al);margin-bottom:20px;line-height:1.55}
+  .abox{background:#0f1828;border:1px solid var(--am);border-radius:10px;padding:28px;margin-top:32px}
+  .albl{font-size:10px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--am);margin-bottom:16px}
+  .atxt{font-size:14px;line-height:1.9;color:var(--gl);white-space:pre-wrap;font-family:'Lora',serif;font-style:italic}
+  .bv{margin-top:24px;padding:18px 22px;border-radius:8px;display:none}
+  .bv.show{display:block}
+  .bv .bvm{font-size:28px;font-weight:700;font-family:'Lora',serif}
+  .bv .bvl{font-size:13px;margin-top:4px;line-height:1.6}
+  .bv .bvt{margin-top:10px;font-size:12px;padding:10px 14px;border-radius:6px;line-height:1.65}
+  .smi{display:flex;align-items:flex-start;gap:12px;padding:12px 16px;background:var(--nm);border:1px solid rgba(255,255,255,.07);border-radius:6px;margin-bottom:6px;user-select:none}
+  .smi.yes{background:rgba(30,122,74,.12);border-color:var(--gn)}
+  .smi.no{background:rgba(192,57,43,.1);border-color:var(--rd)}
+  .smico{width:22px;height:22px;border-radius:50%;border:2px solid var(--gm);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:12px;transition:all .2s}
+  .smi.yes .smico{background:var(--gn);border-color:var(--gn);color:#fff}
+  .smi.no .smico{background:var(--rd);border-color:var(--rd);color:#fff}
+  .smt{font-size:13px;color:var(--gl);line-height:1.55}
+  .smc{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--am);display:block;margin-bottom:3px}
+  .smtog{display:flex;gap:8px;margin-top:4px}
+  .smb{padding:5px 14px;border-radius:4px;font-size:11px;font-weight:700;cursor:pointer;border:1px solid rgba(255,255,255,.15);background:transparent;color:var(--gl);transition:all .15s}
+  .smb.yb:hover,.smb.yb.active{background:var(--gn);border-color:var(--gn);color:#fff}
+  .smb.nb:hover,.smb.nb.active{background:var(--rd);border-color:var(--rd);color:#fff}
+  .btn{display:inline-block;padding:11px 24px;border-radius:6px;font-size:13px;font-weight:700;cursor:pointer;border:none;transition:opacity .2s,transform .1s;letter-spacing:.02em}
+  .btn:active{transform:scale(.98)}
+  .btnp{background:var(--am);color:var(--nv)}
+  .btnp:hover{opacity:.9}
+  .btnp:disabled{opacity:.35;cursor:not-allowed}
+  .btns{background:transparent;border:1px solid rgba(255,255,255,.25);color:var(--wh);margin-left:10px}
+  .btns:hover{border-color:rgba(255,255,255,.5)}
+  .arow{margin-top:24px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+  hr.div{border:none;border-top:1px solid rgba(255,255,255,.08);margin:32px 0}
+  .pb{height:3px;background:rgba(255,255,255,.08);border-radius:2px;margin-bottom:28px;overflow:hidden}
+  .pf{height:100%;background:var(--am);border-radius:2px;transition:width .4s ease}
+  .ic{background:var(--nl);border:1px solid rgba(255,255,255,.08);border-radius:8px;padding:14px 18px;margin-bottom:20px}
+  .ic .ict{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--am);margin-bottom:8px}
+  .ic p{font-size:13px;color:var(--gl);line-height:1.65}
+  .splbl{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--am);padding:6px 0 14px;border-top:1px solid rgba(255,255,255,.08);margin-top:8px;margin-bottom:4px}
+  .fc-count{font-size:11px;color:var(--gm);margin-top:4px;transition:color .2s}
+  .fc-count.ok{color:var(--gn)}
+  .fc-count.warn{color:var(--rd)}
+  .lock-bar{background:rgba(192,57,43,.15);border:1px solid var(--rd);border-radius:6px;padding:10px 16px;font-size:12px;color:#f5a0a0;margin-top:16px;display:none}
+  .lock-bar.show{display:block}
+  /* MODAL */
+  .modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:999;display:none;align-items:center;justify-content:center}
+  .modal-bg.show{display:flex}
+  .modal{background:var(--nm);border:1px solid var(--am);border-radius:12px;padding:32px;max-width:480px;width:90%;text-align:center}
+  .modal h2{font-family:'Lora',serif;font-size:20px;color:var(--wh);margin-bottom:12px}
+  .modal p{font-size:13px;color:var(--gl);line-height:1.7;margin-bottom:24px}
+  .modal-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+  @media(max-width:600px){header{padding:16px;flex-direction:column;gap:4px}.pnav{padding:0 12px;overflow-x:auto}main{padding:24px 16px 60px}}
+</style>
+</head>
+<body>
+
+<!-- Evidence checkpoint modal -->
+<div class="modal-bg" id="ev-modal">
+  <div class="modal">
+    <h2>Before you continue</h2>
+    <p>Does your response include <strong>specific case evidence</strong> — a fact, figure, or exhibit from the case study material — attached to your tool application?<br><br>If you typed generic sentences without case-specific data, go back and add it now.</p>
+    <div class="modal-btns">
+      <button class="btn btnp" onclick="modalYes()">Yes — my tool sentence uses case evidence</button>
+      <button class="btn btns" style="margin-left:0" onclick="modalNo()">No — take me back to fix it</button>
+    </div>
+  </div>
+</div>
+
+<header>
+  <span class="ey">IB Business Management · Papers 1 &amp; 2</span>
+  <h1>10-Mark Essay Builder</h1>
+</header>
+
+<nav class="pnav">
+  <div class="ptab active" id="tab1" onclick="navClick(1)"><span class="tn">1</span> Diagnose a weak response</div>
+  <div class="ptab locked" id="tab2" onclick="navClick(2)"><span class="tn">2</span> Build your argument</div>
+  <div class="ptab locked" id="tab3" onclick="navClick(3)"><span class="tn">3</span> Your paragraph &amp; mark</div>
+</nav>
+
+<main>
+<!-- ===== PHASE 1 ===== -->
+<div class="phase active" id="phase1">
+  <div class="pb"><div class="pf" id="prog1" style="width:0%"></div></div>
+  <p class="stitle">Phase 1 — Diagnose a Weak Response</p>
+  <p class="ssub">Read the student response below. Tick every part of the analysis chain that is present. This is what examiners do before awarding a mark.</p>
+  <div class="qbox">
+    <div class="ql">The Question</div>
+    <p>Examine the decision by <em>[Business X]</em> to launch a new product into an international market. <strong>[10 marks]</strong></p>
+  </div>
+  <div class="wrbox">
+    <div class="wrlbl">⚠ Weak Student Response — read carefully</div>
+    <p>"Business X is considering launching its new product internationally. A SWOT analysis shows that the business has many strengths, weaknesses, opportunities and threats. One strength is that the business has a strong brand. A weakness is that it has high costs. An opportunity is the growing international market and a threat is competition from rivals. The Ansoff Matrix is a tool used to identify growth strategies. Business X could use market development to enter the new market. In conclusion, Business X should launch internationally because the Ansoff Matrix and SWOT analysis both suggest this is a good idea."</p>
+  </div>
+  <p class="ctitle">Tick every element you can find in the response above:</p>
+  <div id="dc">
+    <div class="ci" onclick="toggleCheck(this)" data-k="point"><div class="cb"></div><div class="ct"><span class="cl">Point</span>A clear argument or position directly answering the question</div></div>
+    <div class="ci" onclick="toggleCheck(this)" data-k="tool"><div class="cb"></div><div class="ct"><span class="cl">Tool — Named</span>A business management tool is mentioned by name</div></div>
+    <div class="ci" onclick="toggleCheck(this)" data-k="tool-applied"><div class="cb"></div><div class="ct"><span class="cl">Tool — Applied</span>The tool is used with specific case evidence (not just named or listed)</div></div>
+    <div class="ci" onclick="toggleCheck(this)" data-k="tmt"><div class="cb"></div><div class="ct"><span class="cl">This Means That…</span>The consequence of the evidence is explained for the business</div></div>
+    <div class="ci" onclick="toggleCheck(this)" data-k="wlt"><div class="cb"></div><div class="ct"><span class="cl">Which Leads To…</span>The logic is extended — impact on stakeholders, strategy, or performance</div></div>
+    <div class="ci" onclick="toggleCheck(this)" data-k="therefore"><div class="cb"></div><div class="ct"><span class="cl">Therefore…</span>A mini-judgement that links back to the question</div></div>
+    <div class="ci" onclick="toggleCheck(this)" data-k="counter"><div class="cb"></div><div class="ct"><span class="cl">Counter-argument</span>A second paragraph arguing the opposing side using a different tool</div></div>
+    <div class="ci" onclick="toggleCheck(this)" data-k="limitation"><div class="cb"></div><div class="ct"><span class="cl">Limitation</span>A limitation of the evidence or tool is acknowledged</div></div>
+  </div>
+  <div class="arow">
+    <button class="btn btnp" onclick="showDiagVerdict()">See what the examiner sees →</button>
+  </div>
+  <div class="vbox" id="dv"></div>
+  <div class="arow" id="d-next" style="display:none">
+    <button class="btn btnp" onclick="unlockAndGo(2)">Now build your own response →</button>
+  </div>
+</div>
+
+<!-- ===== PHASE 2 ===== -->
+<div class="phase" id="phase2">
+  <div class="pb"><div class="pf" id="prog2" style="width:0%"></div></div>
+  <p class="stitle">Phase 2 — Build Your Argument</p>
+  <p class="ssub">Write one sentence at a time. Each step is one link in the analysis chain. The minimum for each box is 30 characters — brief notes will not be accepted.</p>
+  <div class="ic">
+    <div class="ict">The Chain — every sentence must do one job</div>
+    <p><strong style="color:var(--am)">Point</strong> → <strong style="color:var(--am)">Tool + case evidence</strong> → <strong style="color:var(--am)">This means that…</strong> → <strong style="color:var(--am)">Which leads to…</strong> → <strong style="color:var(--am)">Therefore…</strong></p>
+  </div>
+  <div class="qbox">
+    <div class="ql">Your Question — replace with your actual exam question</div>
+    <p>Examine the decision by <em>[Business X]</em> to launch a new product into an international market. <strong>[10 marks]</strong></p>
+  </div>
+
+  <div class="splbl">§1 — Argument (supporting the decision)</div>
+
+  <div class="cstep">
+    <div class="shdr"><span class="sbadge">Point</span><span class="sq">State your argument. No preamble.</span></div>
+    <div class="shint">Start with: "One advantage of…" / "A key argument in favour of… is…"</div>
+    <textarea id="f-s1p" rows="2" placeholder="e.g. One advantage of Business X launching internationally is that it can access a larger customer base, increasing long-term revenue." oninput="onFieldInput(this,'c-s1p',30)"></textarea>
+    <div class="fc-count" id="c-s1p">Minimum 30 characters</div>
+  </div>
+
+  <div class="cstep">
+    <div class="shdr"><span class="sbadge">Tool — Select one</span></div>
+    <div class="shint">Choose the most relevant tool, then write how it applies using specific case evidence.</div>
+    <div class="tcrow" id="p1t">
+      <div class="tc" onclick="selTool('p1','SWOT Analysis',this)">SWOT Analysis</div>
+      <div class="tc" onclick="selTool('p1','Ansoff Matrix',this)">Ansoff Matrix</div>
+      <div class="tc" onclick="selTool('p1','BCG Matrix',this)">BCG Matrix</div>
+      <div class="tc" onclick="selTool('p1','STEEPLE Analysis',this)">STEEPLE Analysis</div>
+      <div class="tc" onclick="selTool('p1','Decision Tree',this)">Decision Tree</div>
+      <div class="tc" onclick="selTool('p1','Force Field Analysis',this)">Force Field HL</div>
+      <div class="tc" onclick="selTool('p1','Porter\'s Generic Strategies',this)">Porter's HL</div>
+    </div>
+    <input type="hidden" id="p1tv">
+    <div class="shint" style="margin-top:6px">Include: tool name + specific case data (figure, exhibit, fact from the stimulus).</div>
+    <textarea id="f-s1t" rows="3" placeholder="e.g. The Ansoff Matrix classifies Business X's move as market development — the product exists, the market is new. This aligns with the company's existing production capacity (Exhibit 2)." oninput="onFieldInput(this,'c-s1t',30)"></textarea>
+    <div class="fc-count" id="c-s1t">Minimum 30 characters</div>
+  </div>
+
+  <div class="cstep">
+    <div class="shdr"><span class="sbadge">This means that…</span><span class="sq">What is the consequence for the business?</span></div>
+    <div class="shint">Do not describe the tool again. Explain what this evidence means for Business X specifically.</div>
+    <textarea id="f-s1m" rows="2" placeholder="e.g. This means that Business X can leverage existing product development costs, keeping unit costs lower than full diversification would require." oninput="onFieldInput(this,'c-s1m',30)"></textarea>
+    <div class="fc-count" id="c-s1m">Minimum 30 characters</div>
+  </div>
+
+  <div class="cstep">
+    <div class="shdr"><span class="sbadge">Which leads to…</span><span class="sq">Extend the logic — who or what is affected?</span></div>
+    <div class="shint">Think: stakeholders, competitive position, financial performance, long-term strategy.</div>
+    <textarea id="f-s1w" rows="2" placeholder="e.g. …which leads to a stronger financial position that may attract investor confidence and fund the next stage of expansion." oninput="onFieldInput(this,'c-s1w',30)"></textarea>
+    <div class="fc-count" id="c-s1w">Minimum 30 characters</div>
+  </div>
+
+  <div class="cstep">
+    <div class="shdr"><span class="sbadge">Therefore…</span><span class="sq">Mini-judgement — link back to the question.</span></div>
+    <div class="shint">Does this evidence support or complicate the decision? Be direct.</div>
+    <textarea id="f-s1f" rows="2" placeholder="e.g. Therefore, the Ansoff evidence supports international expansion, provided Business X has sufficient distribution capacity in the target market." oninput="onFieldInput(this,'c-s1f',30)"></textarea>
+    <div class="fc-count" id="c-s1f">Minimum 30 characters</div>
+  </div>
+
+  <hr class="div">
+  <div class="splbl">§2 — Counter-argument (challenging the decision)</div>
+  <div class="p2note">⚠ Use a <strong>different tool</strong> from §1. Use <strong>different case evidence</strong>. This paragraph must argue the opposing side.</div>
+
+  <div class="cstep">
+    <div class="shdr"><span class="sbadge">Counter-Point</span><span class="sq">Open with "However…" and state the opposing argument.</span></div>
+    <textarea id="f-s2c" rows="2" placeholder="e.g. However, a significant risk is that Business X may lack the financial resources to sustain operations in a new market long enough to become profitable." oninput="onFieldInput(this,'c-s2c',30)"></textarea>
+    <div class="fc-count" id="c-s2c">Minimum 30 characters</div>
+  </div>
+
+  <div class="cstep">
+    <div class="shdr"><span class="sbadge">Tool — Select one (different from §1)</span></div>
+    <div class="tcrow" id="p2t">
+      <div class="tc" onclick="selTool('p2','SWOT Analysis',this)">SWOT Analysis</div>
+      <div class="tc" onclick="selTool('p2','Ansoff Matrix',this)">Ansoff Matrix</div>
+      <div class="tc" onclick="selTool('p2','BCG Matrix',this)">BCG Matrix</div>
+      <div class="tc" onclick="selTool('p2','STEEPLE Analysis',this)">STEEPLE Analysis</div>
+      <div class="tc" onclick="selTool('p2','Decision Tree',this)">Decision Tree</div>
+      <div class="tc" onclick="selTool('p2','Force Field Analysis',this)">Force Field HL</div>
+      <div class="tc" onclick="selTool('p2','Porter\'s Generic Strategies',this)">Porter's HL</div>
+    </div>
+    <input type="hidden" id="p2tv">
+    <div class="shint" style="margin-top:6px">Apply using different case evidence from §1.</div>
+    <textarea id="f-s2t" rows="3" placeholder="e.g. A SWOT analysis reveals a key weakness: Business X's cash reserves cover only 4 months of projected overseas operating costs (Exhibit 3)." oninput="onFieldInput(this,'c-s2t',30)"></textarea>
+    <div class="fc-count" id="c-s2t">Minimum 30 characters</div>
+  </div>
+
+  <div class="cstep">
+    <div class="shdr"><span class="sbadge">This means that…</span></div>
+    <textarea id="f-s2m" rows="2" placeholder="e.g. This means that any unexpected delay in generating overseas revenue could threaten the firm's short-term liquidity." oninput="onFieldInput(this,'c-s2m',30)"></textarea>
+    <div class="fc-count" id="c-s2m">Minimum 30 characters</div>
+  </div>
+
+  <div class="cstep">
+    <div class="shdr"><span class="sbadge">Which leads to…</span></div>
+    <textarea id="f-s2w" rows="2" placeholder="e.g. …which leads to a risk of reputational damage if the firm is forced to exit the market early, undermining future expansion attempts." oninput="onFieldInput(this,'c-s2w',30)"></textarea>
+    <div class="fc-count" id="c-s2w">Minimum 30 characters</div>
+  </div>
+
+  <div class="cstep">
+    <div class="shdr"><span class="sbadge">Therefore…</span><span class="sq">Does this counter-evidence outweigh §1?</span></div>
+    <textarea id="f-s2f" rows="2" placeholder="e.g. Therefore, the SWOT evidence challenges the case for expansion unless Business X secures additional funding before entering the market." oninput="onFieldInput(this,'c-s2f',30)"></textarea>
+    <div class="fc-count" id="c-s2f">Minimum 30 characters</div>
+  </div>
+
+  <hr class="div">
+  <div class="splbl">§3 — Conclusion &amp; Judgement (required for 9–10)</div>
+
+  <div class="cstep">
+    <div class="shdr"><span class="sbadge">Weigh</span><span class="sq">Which argument is stronger — and why?</span></div>
+    <div class="shint">Start with "On balance…" and refer to both tools by name in the same sentence.</div>
+    <textarea id="f-s3b" rows="2" placeholder="e.g. On balance, the SWOT weakness evidence is more compelling than the Ansoff opportunity, because financial exposure is an immediate constraint." oninput="onFieldInput(this,'c-s3b',30)"></textarea>
+    <div class="fc-count" id="c-s3b">Minimum 30 characters</div>
+  </div>
+
+  <div class="cstep">
+    <div class="shdr"><span class="sbadge">Limitation</span><span class="sq">State ONE specific limitation of the case evidence or tools used.</span></div>
+    <div class="shint">Required to access 9–10. "SWOT is a useful tool" does not count — name the specific gap.</div>
+    <textarea id="f-s3l" rows="2" placeholder="e.g. However, the case study does not provide competitor pricing data, which limits the reliability of the Ansoff classification." oninput="onFieldInput(this,'c-s3l',30)"></textarea>
+    <div class="fc-count" id="c-s3l">Minimum 30 characters</div>
+  </div>
+
+  <div class="cstep">
+    <div class="shdr"><span class="sbadge">Final Judgement</span><span class="sq">One sentence answering the question. Conditional judgements score higher.</span></div>
+    <div class="shint">Start with "Therefore, Business X should / should not… provided that… in order to…"</div>
+    <textarea id="f-s3j" rows="2" placeholder="e.g. Therefore, Business X should delay the international launch until it has secured a funding partner, in order to reduce the financial risk identified by the SWOT analysis." oninput="onFieldInput(this,'c-s3j',30)"></textarea>
+    <div class="fc-count" id="c-s3j">Minimum 30 characters</div>
+  </div>
+
+  <div class="lock-bar" id="lbar">Complete all fields above (minimum 30 characters each) before proceeding.</div>
+  <div class="arow">
+    <button class="btn btnp" id="go3btn" onclick="tryGoPhase3()" disabled>Assemble my response →</button>
+    <button class="btn btns" onclick="unlockAndGo(1)">← Back to diagnosis</button>
+  </div>
+</div>
+
+<!-- ===== PHASE 3 ===== -->
+<div class="phase" id="phase3">
+  <p class="stitle">Phase 3 — Your Response &amp; Mark</p>
+  <p class="ssub">Read your assembled paragraph. Then self-mark it honestly. Tick Yes only if the element genuinely does the job — not if it merely resembles it.</p>
+  <div class="abox" id="aout">
+    <div class="albl">Your assembled response</div>
+    <div class="atxt" id="atxt"></div>
+  </div>
+  <hr class="div">
+  <p class="ctitle">Self-mark — does your response contain each of these?</p>
+  <p style="font-size:12px;color:var(--gm);margin-bottom:16px">Tap Yes or No for every element. If an element is present but weak or vague, tap No.</p>
+  <div id="smitems">
+    <div class="smi" id="smi-point">
+      <div class="smico" id="sico-point">?</div>
+      <div style="flex:1"><div class="smt"><span class="smc">Point</span>Your §1 opens with a clear, direct argument answering the question — not background context or a definition.</div>
+      <div class="smtog"><button class="smb yb" onclick="smv('point','yes')">Yes ✓</button><button class="smb nb" onclick="smv('point','no')">No ✗</button></div></div>
+    </div>
+    <div class="smi" id="smi-tool-applied">
+      <div class="smico" id="sico-tool-applied">?</div>
+      <div style="flex:1"><div class="smt"><span class="smc">Tool Applied (not just named)</span>Your tool sentence contains: tool name + a specific fact from the case + what the tool shows. A tool definition or category list does not qualify.</div>
+      <div class="smtog"><button class="smb yb" onclick="smv('tool-applied','yes')">Yes ✓</button><button class="smb nb" onclick="smv('tool-applied','no')">No ✗</button></div></div>
+    </div>
+    <div class="smi" id="smi-tmt">
+      <div class="smico" id="sico-tmt">?</div>
+      <div style="flex:1"><div class="smt"><span class="smc">This Means That…</span>You explain what the tool evidence means specifically for this business — not a restatement of the evidence itself.</div>
+      <div class="smtog"><button class="smb yb" onclick="smv('tmt','yes')">Yes ✓</button><button class="smb nb" onclick="smv('tmt','no')">No ✗</button></div></div>
+    </div>
+    <div class="smi" id="smi-wlt">
+      <div class="smico" id="sico-wlt">?</div>
+      <div style="flex:1"><div class="smt"><span class="smc">Which Leads To…</span>You extend the consequence to stakeholders, competitive position, or strategy — not the same point rephrased.</div>
+      <div class="smtog"><button class="smb yb" onclick="smv('wlt','yes')">Yes ✓</button><button class="smb nb" onclick="smv('wlt','no')">No ✗</button></div></div>
+    </div>
+    <div class="smi" id="smi-counter">
+      <div class="smico" id="sico-counter">?</div>
+      <div style="flex:1"><div class="smt"><span class="smc">Counter-argument with different tool</span>§2 argues the opposing side using a genuinely different tool and different case evidence from §1.</div>
+      <div class="smtog"><button class="smb yb" onclick="smv('counter','yes')">Yes ✓</button><button class="smb nb" onclick="smv('counter','no')">No ✗</button></div></div>
+    </div>
+    <div class="smi" id="smi-limitation">
+      <div class="smico" id="sico-limitation">?</div>
+      <div style="flex:1"><div class="smt"><span class="smc">Limitation acknowledged</span>You state a specific limitation of the case evidence or tool — not a generic comment about tool limitations in general.</div>
+      <div class="smtog"><button class="smb yb" onclick="smv('limitation','yes')">Yes ✓</button><button class="smb nb" onclick="smv('limitation','no')">No ✗</button></div></div>
+    </div>
+    <div class="smi" id="smi-judgement">
+      <div class="smico" id="sico-judgement">?</div>
+      <div style="flex:1"><div class="smt"><span class="smc">Final Judgement</span>Your conclusion directly answers the question with a conditional recommendation — not "both arguments are valid" or a flat statement.</div>
+      <div class="smtog"><button class="smb yb" onclick="smv('judgement','yes')">Yes ✓</button><button class="smb nb" onclick="smv('judgement','no')">No ✗</button></div></div>
+    </div>
+  </div>
+  <div class="arow">
+    <button class="btn btnp" onclick="showBand()">Show my mark band →</button>
+  </div>
+  <div class="bv" id="bvbox"></div>
+  <div class="arow" style="margin-top:32px">
+    <button class="btn btns" style="margin-left:0" onclick="resetAll()">Start again</button>
+  </div>
+</div>
+</main>
+
+<script>
+// ---- ANTI-TAMPER ----
+(function(){
+  // Disable right-click
+  document.addEventListener('contextmenu',function(e){e.preventDefault();return false});
+  // Block common DevTools shortcuts
+  document.addEventListener('keydown',function(e){
+    if(e.key==='F12'){e.preventDefault();return false}
+    if((e.ctrlKey||e.metaKey)&&e.shiftKey&&['I','i','J','j','C','c'].includes(e.key)){e.preventDefault();return false}
+    if((e.ctrlKey||e.metaKey)&&['U','u'].includes(e.key)){e.preventDefault();return false}
+  });
+  // Debugger trap — slows automated inspection
+  setInterval(function(){(function(){})['constructor']('debugger')()},2000);
+  // Clear console periodically
+  setInterval(function(){try{console.clear();console.log('%cNothing to see here.','color:#1a2340')}catch(x){}},1500);
+  // Detect DevTools open via size heuristic
+  var _dt=false;
+  setInterval(function(){
+    var t=window.outerHeight-window.innerHeight>160||window.outerWidth-window.innerWidth>160;
+    if(t&&!_dt){_dt=true;document.body.style.filter='blur(8px)';document.body.style.pointerEvents='none'}
+    else if(!t&&_dt){_dt=false;document.body.style.filter='';document.body.style.pointerEvents=''}
+  },800);
+})();
+
+// ---- SCORING ENGINE (encoded) ----
+var _sc='W3siaWQiOiJyMSIsImNoZWNrIjoiTk9UOnRvb2wtYXBwbGllZCIsIm1hcmtzIjoiM+KAkzQiLCJjb2xvdXIiOiIjYzAzOTJiIiwiYmciOiIjZmRlOGU2IiwibGFiZWwiOiJUb29sIG5hbWVkIGJ1dCBub3QgYXBwbGllZC4gVGhpcyBpcyB0aGUgY2VpbGluZyBhdCB0aGlzIGJhbmQuIiwidGlwIjoiR28gYmFjayB0byB5b3VyIHRvb2wgc2VudGVuY2UuIEFkZCBzcGVjaWZpYyBjYXNlIGRhdGEgZnJvbSB0aGUgc3RpbXVsdXMgbWF0ZXJpYWwsIHRoZW4gd3JpdGUgd2hhdCB0aGF0IGRhdGEgbWVhbnMgZm9yIHRoZSBidXNpbmVzcy4gTm90aGluZyBlbHNlIGltcHJvdmVzIHlvdXIgbWFyayB1bnRpbCB0aGlzIGlzIGRvbmUuIn0seyJpZCI6InIyIiwiY2hlY2siOiJ0b29sLWFwcGxpZWQ6Tk9UOnRtdCIsIm1hcmtzIjoiNOKAkzUiLCJjb2xvdXIiOiIjZThhMDIwIiwiYmciOiIjZmRmM2UwIiwibGFiZWwiOiJUb29sIGFwcGxpZWQsIGJ1dCB0aGUgY29uc2VxdWVuY2UgY2hhaW4gc3RvcHMgaW1tZWRpYXRlbHkgYWZ0ZXIuIiwidGlwIjoiWW91IGF0dGFjaGVkIGNhc2UgZXZpZGVuY2UgdG8gYSB0b29sIOKAlCB0aGF0IGlzIHRoZSBoYXJkZXN0IHN0ZXAuIE5vdyB3cml0ZSB3aGF0IGl0IG1lYW5zIGZvciB0aGUgYnVzaW5lc3MuIFN0YXJ0IHlvdXIgbmV4dCBzZW50ZW5jZSB3aXRoIOKAnFRoaXMgbWVhbnMgdGhhdOKApuKAnSBhbmQgZXhwbGFpbiB0aGUgY29uc2VxdWVuY2UsIG5vdCB0aGUgZXZpZGVuY2UgYWdhaW4uIn0seyJpZCI6InIzIiwiY2hlY2siOiJ0b29sLWFwcGxpZWQ6dG10Ok5PVDp3bHQiLCJtYXJrcyI6IjXigJM2IiwiY29sb3VyIjoiI2U4YTAyMCIsImJnIjoiI2ZkZjNlMCIsImxhYmVsIjoiT25lIHRvb2wgYXBwbGllZCB3aXRoIGEgY29uc2VxdWVuY2Ug4oCUIHNvbGlkIGJhc2UuIEV4dGVuZGVkIGxvZ2ljIGFuZCBjb3VudGVyLWFyZ3VtZW50IGFyZSBtaXNzaW5nLiIsInRpcCI6IkFkZCBhIOKAnFdoaWNoIGxlYWRzIHRv4oCm4oCdIHNlbnRlbmNlIHRoYXQgY29ubmVjdHMgdGhlIGNvbnNlcXVlbmNlIHRvIHN0YWtlaG9sZGVycywgY29tcGV0aXRpdmUgcG9zaXRpb24sIG9yIGZpbmFuY2lhbCBwZXJmb3JtYW5jZS4gVGhlbiBidWlsZCBhIGdlbnVpbmUgY291bnRlci1wYXJhZ3JhcGggdXNpbmcgYSBkaWZmZXJlbnQgdG9vbC4ifSx7ImlkIjoicjQiLCJjaGVjayI6InRvb2wtYXBwbGllZDp0bXQ6d2x0Ok5PVDpjb3VudGVyIiwibWFya3MiOiI24oCTNyIsImNvbG91ciI6IiNlOGEwMjAiLCJiZyI6IiNmZGYzZTAiLCJsYWJlbCI6IlN0cm9uZyBmaXJzdCBhcmd1bWVudCwgYnV0IG5vIGNvdW50ZXIuIE9uZS1zaWRlZCByZXNwb25zZXMgY2Fubm90IGV4Y2VlZCB0aGlzIGJhbmQuIiwidGlwIjoiVGhlIGNvdW50ZXItcGFyYWdyYXBoIGlzIG5vdCBvcHRpb25hbCBhYm92ZSB0aGlzIGJhbmQuIEl0IG11c3QgYXJndWUgdGhlIG9wcG9zaW5nIHNpZGUgdXNpbmcgYSBkaWZmZXJlbnQgdG9vbCBhbmQgZGlmZmVyZW50IGNhc2UgZXZpZGVuY2UgZnJvbSB5b3VyIGZpcnN0IHBhcmFncmFwaC4ifSx7ImlkIjoicjUiLCJjaGVjayI6InRvb2wtYXBwbGllZDp0bXQ6d2x0OmNvdW50ZXI6Tk9UOmxpbWl0YXRpb24iLCJtYXJrcyI6IjfigJM4IiwiY29sb3VyIjoiIzFlN2E0YSIsImJnIjoiI2Q0ZjBlMiIsImxhYmVsIjoiVHdvIHRvb2xzIGFwcGxpZWQsIGJhbGFuY2VkIGFyZ3VtZW50IOKAlCB0aGlzIGlzIGEgN+KAkzggcmVzcG9uc2UuIiwidGlwIjoiVG8gcmVhY2ggdGhlIHRvcCBiYW5kLCBhZGQgb25lIHNwZWNpZmljIGxpbWl0YXRpb24gaW4geW91ciBjb25jbHVzaW9uLiBOYW1lIHRoZSBkYXRhIHRoYXQgaXMgYWJzZW50IGZyb20gdGhlIGNhc2Ugc3R1ZHkgb3Igc3RhdGUgYSBzcGVjaWZpYyB3ZWFrbmVzcyBvZiB0aGUgdG9vbCB5b3UgdXNlZC4gR2VuZXJpYyBzdGF0ZW1lbnRzIGFib3V0IHRvb2wgbGltaXRhdGlvbnMgZG8gbm90IGNvdW50LiJ9LHsiaWQiOiJyNiIsImNoZWNrIjoidG9vbC1hcHBsaWVkOnRtdDp3bHQ6Y291bnRlcjpsaW1pdGF0aW9uOmp1ZGdlbWVudCIsIm1hcmtzIjoiOeKAkzEwIiwiY29sb3VyIjoiIzFlN2E0YSIsImJnIjoiI2Q0ZjBlMiIsImxhYmVsIjoiRnVsbCBjaGFpbiBwcmVzZW50IGFjcm9zcyBib3RoIHBhcmFncmFwaHMg4oCUIHRoaXMgaXMgYSA54oCTMTAgcmVzcG9uc2UuIiwidGlwIjoiQmVmb3JlIHN1Ym1pc3Npb246IGNvbmZpcm0geW91ciBmaW5hbCBqdWRnZW1lbnQgaXMgY29uZGl0aW9uYWwuIOKAnEJ1c2luZXNzIFggc2hvdWxkIGV4cGFuZCwgcHJvdmlkZWQgdGhhdOKApuKAnSBzY29yZXMgaGlnaGVyIHRoYW4gYSBmbGF0IHJlY29tbWVuZGF0aW9uLiBBIGNvbmRpdGlvbmFsIGp1ZGdlbWVudCBkZW1vbnN0cmF0ZXMgdGhhdCB5b3UgdW5kZXJzdGFuZCB0aGUgdW5jZXJ0YWludHkgaW4gdGhlIGV2aWRlbmNlLiJ9LHsiaWQiOiJyNyIsImNoZWNrIjoidG9vbC1hcHBsaWVkOnRtdDp3bHQ6Y291bnRlcjpsaW1pdGF0aW9uOk5PVDpqdWRnZW1lbnQiLCJtYXJrcyI6IjfigJM4IiwiY29sb3VyIjoiIzFlN2E0YSIsImJnIjoiI2Q0ZjBlMiIsImxhYmVsIjoiQm90aCBwYXJhZ3JhcGhzIGFyZSBzdHJvbmcuIEZpbmFsIGp1ZGdlbWVudCBpcyBtaXNzaW5nIG9yIHRvbyB2YWd1ZS4iLCJ0aXAiOiJZb3VyIGNvbmNsdXNpb24gbmVlZHMgdG8gZGlyZWN0bHkgYW5zd2VyIHRoZSBxdWVzdGlvbiB3aXRoIGEgY29uZGl0aW9uYWwgcmVjb21tZW5kYXRpb24gdGhhdCByZWZlcnMgdG8gYm90aCB0b29scyBieSBuYW1lLiBUaGlzIGlzIHRoZSBsYXN0IHN0ZXAgdG8gcmVhY2ggdGhlIHRvcCBiYW5kLiJ9XQ==';
+function _evalR(st){
+  var rules=JSON.parse(atob(_sc));
+  for(var i=0;i<rules.length;i++){
+    var r=rules[i];
+    var parts=r.check.split(':');
+    var match=true;
+    var j=0;
+    while(j<parts.length){
+      if(parts[j]==='NOT'){
+        j++;
+        if(st[parts[j]]==='yes'){match=false;break}
+      } else {
+        if(st[parts[j]]!=='yes'){match=false;break}
+      }
+      j++;
+    }
+    if(match)return r;
+  }
+  return rules[rules.length-1];
+}
+
+// ---- STATE ----
+var _ds={},_ss={},_cp=1,_p2unlocked=false,_p3unlocked=false;
+var _flds=['f-s1p','f-s1t','f-s1m','f-s1w','f-s1f','f-s2c','f-s2t','f-s2m','f-s2w','f-s2f','f-s3b','f-s3l','f-s3j'];
+var _MIN=30;
+
+// ---- FIELD VALIDATION ----
+function onFieldInput(el,cid,min){
+  var v=el.value.trim().length;
+  var c=document.getElementById(cid);
+  if(v>=min){c.textContent='✓ Good';c.className='fc-count ok';el.classList.remove('err')}
+  else{c.textContent=(min-v)+' more characters needed';c.className='fc-count warn';el.classList.add('err')}
+  updateP2Progress();
+  checkP2Lock();
+}
+
+function checkP2Lock(){
+  var allOk=_flds.every(function(id){
+    return document.getElementById(id).value.trim().length>=_MIN;
+  });
+  var btn=document.getElementById('go3btn');
+  var bar=document.getElementById('lbar');
+  btn.disabled=!allOk;
+  bar.className=allOk?'lock-bar':'lock-bar show';
+}
+
+function updateP2Progress(){
+  var filled=_flds.filter(function(id){return document.getElementById(id).value.trim().length>=_MIN}).length;
+  document.getElementById('prog2').style.width=(filled/_flds.length*100)+'%';
+}
+
+// ---- PHASE NAV ----
+function navClick(n){
+  if(n===2&&!_p2unlocked)return;
+  if(n===3&&!_p3unlocked)return;
+  goPhase(n);
+}
+
+function unlockAndGo(n){
+  if(n===2)_p2unlocked=true;
+  goPhase(n);
+}
+
+function goPhase(n){
+  document.querySelectorAll('.phase').forEach(function(p){p.classList.remove('active')});
+  document.querySelectorAll('.ptab').forEach(function(t){t.classList.remove('active')});
+  document.getElementById('phase'+n).classList.add('active');
+  var tab=document.getElementById('tab'+n);
+  tab.classList.remove('locked');
+  tab.classList.add('active');
+  _cp=n;
+  if(n===3)assembleResponse();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// ---- EVIDENCE MODAL ----
+function tryGoPhase3(){
+  document.getElementById('ev-modal').classList.add('show');
+}
+function modalYes(){
+  document.getElementById('ev-modal').classList.remove('show');
+  _p3unlocked=true;
+  goPhase(3);
+}
+function modalNo(){
+  document.getElementById('ev-modal').classList.remove('show');
+}
+
+// ---- DIAGNOSIS ----
+function toggleCheck(el){
+  el.classList.toggle('checked');
+  _ds[el.dataset.k]=el.classList.contains('checked');
+  var total=document.querySelectorAll('#dc .ci').length;
+  var chk=document.querySelectorAll('#dc .ci.checked').length;
+  document.getElementById('prog1').style.width=(chk/total*100)+'%';
+}
+
+function showDiagVerdict(){
+  var box=document.getElementById('dv');
+  box.className='vbox show';
+  var tN=_ds['tool'],tA=_ds['tool-applied'],tm=_ds['tmt'],wl=_ds['wlt'],ct=_ds['counter'],lm=_ds['limitation'];
+  var correct=tN&&!tA&&!tm&&!wl&&!ct&&!lm;
+  if(correct){
+    box.classList.add('mid');
+    box.innerHTML='<div class="vt">✓ Correct — you identified the core problem</div><div class="vb">The response names two tools (SWOT and Ansoff) but applies neither. Listing SWOT quadrants is AO1 knowledge, not application. The Ansoff identification is stated without case evidence, no consequence chain follows, and the conclusion is assertion rather than judgement.<br><br><strong>Examiner mark: 3–4.</strong> Tools named but not applied — the most common Year 12 failure pattern.</div>';
+  } else if(tA){
+    box.classList.add('low');
+    box.innerHTML='<div class="vt">Check again — the tool is not actually applied</div><div class="vb">Re-read the tool sentences. Naming a tool and listing its categories is not the same as applying it. Application requires: tool name + a specific fact from the case + what that fact means for the business decision. Neither tool does this.</div>';
+  } else {
+    box.classList.add('low');
+    box.innerHTML='<div class="vt">Look more carefully at what is missing</div><div class="vb">Go back and re-read each sentence. Ask: does this sentence do the job named in the label, or does it only look like it does? The most common error is ticking Tool — Applied when the tool is only named.</div>';
+  }
+  document.getElementById('d-next').style.display='flex';
+}
+
+// ---- TOOL SELECTION ----
+function selTool(para,tool,el){
+  var row=document.getElementById(para+'t');
+  row.querySelectorAll('.tc').forEach(function(c){c.classList.remove('selected')});
+  el.classList.add('selected');
+  document.getElementById(para+'tv').value=tool;
+}
+
+// ---- ASSEMBLE ----
+function assembleResponse(){
+  var g=function(id){return document.getElementById(id).value.trim()};
+  var parts=[g('f-s1p'),g('f-s1t'),g('f-s1m'),g('f-s1w'),g('f-s1f'),'',g('f-s2c'),g('f-s2t'),g('f-s2m'),g('f-s2w'),g('f-s2f'),'',g('f-s3b'),g('f-s3l'),g('f-s3j')];
+  var out=parts.filter(function(p,i){return p!==''||i===5||i===11}).join(' ').replace(/\s+/g,' ').trim();
+  document.getElementById('atxt').textContent=out||'[Nothing written — return to Phase 2]';
+}
+
+// ---- SELF MARK ----
+function smv(key,val){
+  _ss[key]=val;
+  var ico=document.getElementById('sico-'+key);
+  ico.textContent=val==='yes'?'✓':'✗';
+  var row=ico.closest('.smi');
+  row.classList.remove('yes','no');
+  row.classList.add(val);
+  row.querySelectorAll('.smb').forEach(function(b){b.classList.remove('active')});
+  var ab=row.querySelector('.'+val[0]+'b');
+  if(ab)ab.classList.add('active');
+}
+
+// ---- BAND VERDICT ----
+function showBand(){
+  if(Object.keys(_ss).length<7){alert('Please answer Yes or No for every element before seeing your mark band.');return}
+  var r=_evalR(_ss);
+  var box=document.getElementById('bvbox');
+  box.className='bv show';
+  box.style.background=r.bg;
+  box.style.borderLeft='4px solid '+r.colour;
+  box.innerHTML='<div class="bvm" style="color:'+r.colour+'">'+r.marks+' marks</div><div class="bvl" style="color:#333;margin-top:6px">'+r.label+'</div><div class="bvt" style="background:rgba(0,0,0,.06);color:#333">'+r.tip+'</div>';
+}
+
+// ---- RESET ----
+function resetAll(){
+  document.querySelectorAll('textarea').forEach(function(t){t.value=''});
+  document.querySelectorAll('.ci').forEach(function(c){c.classList.remove('checked')});
+  document.querySelectorAll('.tc').forEach(function(c){c.classList.remove('selected')});
+  document.getElementById('p1tv').value='';
+  document.getElementById('p2tv').value='';
+  document.getElementById('dv').className='vbox';
+  document.getElementById('d-next').style.display='none';
+  document.getElementById('bvbox').className='bv';
+  document.querySelectorAll('.smico').forEach(function(i){i.textContent='?'});
+  document.querySelectorAll('.smi').forEach(function(i){i.classList.remove('yes','no')});
+  document.querySelectorAll('.smb').forEach(function(b){b.classList.remove('active')});
+  document.querySelectorAll('.fc-count').forEach(function(c){c.textContent='Minimum 30 characters';c.className='fc-count'});
+  document.querySelectorAll('textarea').forEach(function(t){t.classList.remove('err')});
+  document.getElementById('go3btn').disabled=true;
+  document.getElementById('lbar').className='lock-bar';
+  for(var k in _ss)delete _ss[k];
+  for(var k in _ds)delete _ds[k];
+  _p2unlocked=false;_p3unlocked=false;
+  document.getElementById('prog1').style.width='0%';
+  document.getElementById('prog2').style.width='0%';
+  document.getElementById('tab2').className='ptab locked';
+  document.getElementById('tab3').className='ptab locked';
+  goPhase(1);
+}
+
+// Init lock check
+checkP2Lock();
+</script>
+</body>
+</html>

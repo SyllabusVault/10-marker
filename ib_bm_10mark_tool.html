@@ -278,7 +278,7 @@
   </div>
 
   <hr class="div">
-  <div class="splbl">§3 — Conclusion &amp; Judgement (required for 9–10)</div>
+  <div class="splbl">§3 — Conclusion &amp; Judgement (required for 7-10 marks)</div>
 
   <div class="cstep">
     <div class="shdr"><span class="sbadge">Weigh</span><span class="sq">Which argument is stronger — and why?</span></div>
@@ -289,7 +289,7 @@
 
   <div class="cstep">
     <div class="shdr"><span class="sbadge">Limitation</span><span class="sq">State ONE specific limitation of the case evidence or tools used.</span></div>
-    <div class="shint">Required to access 9–10. "SWOT is a useful tool" does not count — name the specific gap.</div>
+    <div class="shint">Required to access 9-10. "SWOT is a useful tool" does not count — name the specific gap.</div>
     <textarea id="f-s3l" rows="2" placeholder="e.g. However, the case study does not provide competitor pricing data, which limits the reliability of the Ansoff classification." oninput="onFieldInput(this,'c-s3l',30)"></textarea>
     <div class="fc-count" id="c-s3l">Minimum 30 characters</div>
   </div>
@@ -544,7 +544,9 @@ function showBand(){
   box.className='bv show';
   box.style.background=r.bg;
   box.style.borderLeft='4px solid '+r.colour;
-  var markText=String(r.marks).replace(/[–—−]/g,'-').replace(/[^0-9-]/g,'');
+  var rawMarkText=String(r.marks).replace(/[–—−]/g,'-');
+  var nums=(rawMarkText.match(/\d+/g)||[]).slice(0,2);
+  var markText=nums.length>=2 ? (nums[0]+'-'+nums[1]) : rawMarkText.replace(/[^0-9-]/g,'');
   box.innerHTML='<div class="bvm" style="color:'+r.colour+'">'+markText+' marks</div><div class="bvl" style="color:#333;margin-top:6px">'+r.label+'</div><div class="bvt" style="background:rgba(0,0,0,.06);color:#333">'+r.tip+'</div>';
 }
 

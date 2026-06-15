@@ -63,7 +63,7 @@
   .p2note{background:var(--nl);border:1px solid rgba(232,160,32,.25);border-radius:6px;padding:12px 16px;font-size:12px;color:var(--al);margin-bottom:20px;line-height:1.55}
   .abox{background:#0f1828;border:1px solid var(--am);border-radius:10px;padding:28px;margin-top:32px}
   .albl{font-size:10px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--am);margin-bottom:16px}
-  .atxt{font-size:14px;line-height:1.9;color:var(--gl);white-space:pre-wrap;font-family:'Lora',serif;font-style:italic}
+  .atxt{font-size:14px;line-height:1.9;color:var(--gl);font-family:'Lora',serif;font-style:italic}.atxt p{margin:0 0 18px}.atxt p:last-child{margin-bottom:0}
   .bv{margin-top:24px;padding:18px 22px;border-radius:8px;display:none}
   .bv.show{display:block}
   .bv .bvm{font-size:28px;font-weight:700;font-family:'Lora',serif}
@@ -496,7 +496,7 @@ function showDiagVerdict(){
   var correct=tN&&!tA&&!tm&&!wl&&!ct&&!lm;
   if(correct){
     box.classList.add('mid');
-    box.innerHTML='<div class="vt">✓ Correct — you identified the core problem</div><div class="vb">The response names two tools (SWOT and Ansoff) but applies neither. Listing SWOT quadrants is AO1 knowledge, not application. The Ansoff identification is stated without case evidence, no consequence chain follows, and the conclusion is assertion rather than judgement.<br><br><strong>Examiner mark: 3–4.</strong> Tools named but not applied — the most common Year 12 failure pattern.</div>';
+    box.innerHTML='<div class="vt">✓ Correct — you identified the core problem</div><div class="vb">The response names two tools (SWOT and Ansoff) but applies neither. Listing SWOT quadrants is AO1 knowledge, not application. The Ansoff identification is stated without case evidence, no consequence chain follows, and the conclusion is assertion rather than judgement.<br><br><strong>Examiner mark: 3-4 marks.</strong> Tools named but not applied — the most common Year 12 failure pattern.</div>';
   } else if(tA){
     box.classList.add('low');
     box.innerHTML='<div class="vt">Check again — the tool is not actually applied</div><div class="vb">Re-read the tool sentences. Naming a tool and listing its categories is not the same as applying it. Application requires: tool name + a specific fact from the case + what that fact means for the business decision. Neither tool does this.</div>';
@@ -544,7 +544,8 @@ function showBand(){
   box.className='bv show';
   box.style.background=r.bg;
   box.style.borderLeft='4px solid '+r.colour;
-  box.innerHTML='<div class="bvm" style="color:'+r.colour+'">'+r.marks+' marks</div><div class="bvl" style="color:#333;margin-top:6px">'+r.label+'</div><div class="bvt" style="background:rgba(0,0,0,.06);color:#333">'+r.tip+'</div>';
+  var markText=String(r.marks).replace(/[–—−]/g,'-').replace(/[^0-9-]/g,'');
+  box.innerHTML='<div class="bvm" style="color:'+r.colour+'">'+markText+' marks</div><div class="bvl" style="color:#333;margin-top:6px">'+r.label+'</div><div class="bvt" style="background:rgba(0,0,0,.06);color:#333">'+r.tip+'</div>';
 }
 
 // ---- RESET ----

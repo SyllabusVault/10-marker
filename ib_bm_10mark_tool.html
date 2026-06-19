@@ -1,1 +1,838 @@
-PCFET0NUWVBFIGh0bWw+CjxodG1sIGxhbmc9ImVuIj4KPGhlYWQ+CjxtZXRhIGNoYXJzZXQ9IlVURi04Ij4KPG1ldGEgbmFtZT0idmlld3BvcnQiIGNvbnRlbnQ9IndpZHRoPWRldmljZS13aWR0aCwgaW5pdGlhbC1zY2FsZT0xLjAiPgo8dGl0bGU+SUIgQnVzaW5lc3MgTWFuYWdlbWVudCDigJQgMTAtTWFyayBFc3NheSBCdWlsZGVyPC90aXRsZT4=
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IB Business Management — 10-Mark Essay Builder</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lora:ital,wght@0,600;1,400&display=swap');
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{--nv:#1a2340;--nm:#243057;--nl:#2e3d6b;--am:#e8a020;--al:#f5c060;--wh:#f8f7f4;--gl:#eceae4;--gm:#b0aaa0;--gt:#5c5850;--rd:#c0392b;--gn:#1e7a4a;--gnl:#d4f0e2;--rdl:#fde8e6;--amb:#fdf3e0;--blu:#2d5a8c;--blul:#dce8f5}
+  body{font-family:'Inter',sans-serif;background:var(--nv);color:var(--wh);min-height:100vh;padding:0}
+  header{background:var(--nv);border-bottom:2px solid var(--am);padding:20px 32px;display:flex;align-items:baseline;gap:16px;flex-wrap:wrap}
+  header .ey{font-size:10px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--am)}
+  header h1{font-family:'Lora',serif;font-size:20px;font-weight:600;color:var(--wh)}
+  .case-switcher{background:var(--nm);padding:12px 32px;display:flex;align-items:center;gap:10px;border-bottom:1px solid rgba(255,255,255,.08);flex-wrap:wrap}
+  .case-switcher label{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--al)}
+  .case-switcher select{background:var(--nv);color:var(--wh);border:1px solid rgba(232,160,32,.4);border-radius:6px;padding:7px 12px;font-size:13px;font-family:'Inter',sans-serif;cursor:pointer}
+  .case-switcher select:focus{outline:none;border-color:var(--am)}
+  .pnav{background:var(--nm);padding:0 32px;display:flex;border-bottom:1px solid rgba(255,255,255,.08)}
+  .ptab{padding:14px 24px;font-size:13px;font-weight:600;letter-spacing:.03em;color:var(--gm);cursor:pointer;border-bottom:3px solid transparent;transition:color .2s,border-color .2s;user-select:none;display:flex;align-items:center;gap:8px}
+  .ptab .tn{width:20px;height:20px;border-radius:50%;background:rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;transition:background .2s}
+  .ptab.active{color:var(--wh);border-bottom-color:var(--am)}
+  .ptab.active .tn{background:var(--am);color:var(--nv)}
+  .ptab.done{color:var(--al)}
+  .ptab.done .tn{background:var(--al);color:var(--nv)}
+  .ptab.locked{opacity:.4;cursor:not-allowed}
+  main{max-width:860px;margin:0 auto;padding:36px 24px 60px}
+  .phase{display:none}.phase.active{display:block}
+  .stitle{font-family:'Lora',serif;font-size:22px;color:var(--wh);margin-bottom:6px}
+  .ssub{font-size:13px;color:var(--gm);margin-bottom:28px;line-height:1.6}
+  .wrbox{background:var(--nm);border:1px solid rgba(255,255,255,.1);border-left:4px solid var(--rd);border-radius:8px;padding:20px 24px;margin-bottom:24px}
+  .wrbox .wrlbl{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--rd);margin-bottom:10px}
+  .wrbox p{font-size:14px;line-height:1.75;color:var(--gl);font-style:italic}
+  .qbox{background:var(--nl);border:1px solid rgba(232,160,32,.3);border-radius:8px;padding:16px 20px;margin-bottom:24px}
+  .qbox .ql{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--am);margin-bottom:8px}
+  .qbox p{font-size:14px;color:var(--wh);line-height:1.6}
+  .csbox{background:var(--nm);border:1px solid rgba(255,255,255,.12);border-radius:8px;padding:22px 24px;margin-bottom:24px}
+  .csbox .csl{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--al);margin-bottom:12px;display:flex;align-items:center;gap:8px}
+  .csbox h3{font-family:'Lora',serif;font-size:17px;color:var(--wh);margin-bottom:10px}
+  .csbox p{font-size:13.5px;line-height:1.75;color:var(--gl);margin-bottom:12px}
+  .csbox p:last-of-type{margin-bottom:0}
+  .exgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0}
+  .exbox{background:var(--nv);border:1px solid rgba(255,255,255,.1);border-left:3px solid var(--am);border-radius:6px;padding:12px 14px}
+  .exbox .exl{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--am);margin-bottom:6px}
+  .exbox .exv{font-size:12.5px;color:var(--gl);line-height:1.6}
+  .cs-collapsed{cursor:pointer;display:flex;align-items:center;justify-content:space-between;background:var(--nl);border:1px solid rgba(232,160,32,.25);border-radius:8px;padding:14px 20px;margin-bottom:24px;user-select:none}
+  .cs-collapsed:hover{border-color:rgba(232,160,32,.5)}
+  .cs-collapsed .ccl{font-size:13px;font-weight:600;color:var(--al)}
+  .cs-collapsed .ccarrow{font-size:18px;color:var(--al);transition:transform .2s}
+  .cs-full{display:none;margin-top:14px}
+  .cs-full.show{display:block}
+  .ctitle{font-size:13px;font-weight:600;color:var(--wh);margin-bottom:12px}
+  .ci{display:flex;align-items:flex-start;gap:12px;padding:12px 16px;background:var(--nm);border:1px solid rgba(255,255,255,.07);border-radius:6px;margin-bottom:8px;cursor:pointer;transition:border-color .2s,background .2s;user-select:none}
+  .ci:hover{border-color:rgba(255,255,255,.18)}
+  .ci.checked{background:rgba(30,122,74,.15);border-color:var(--gn)}
+  .ci.checked .cb{background:var(--gn);border-color:var(--gn)}
+  .ci.checked .cb::after{display:block}
+  .cb{width:18px;height:18px;border:2px solid var(--gm);border-radius:4px;flex-shrink:0;margin-top:1px;position:relative;transition:background .2s,border-color .2s}
+  .cb::after{content:'✓';display:none;position:absolute;top:-2px;left:1px;font-size:12px;color:#fff;font-weight:700}
+  .ci .ct{font-size:13px;line-height:1.55;color:var(--gl)}
+  .ci .cl{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--am);display:block;margin-bottom:3px}
+  .vbox{display:none;margin-top:20px;border-radius:8px;padding:18px 22px}
+  .vbox.show{display:block}
+  .vbox.low{background:var(--rdl);border-left:4px solid var(--rd)}
+  .vbox.mid{background:var(--amb);border-left:4px solid var(--am)}
+  .vbox.high{background:var(--gnl);border-left:4px solid var(--gn)}
+  .vbox .vt{font-size:15px;font-weight:700;margin-bottom:6px}
+  .vbox.low .vt{color:var(--rd)}.vbox.mid .vt{color:#7a5a00}.vbox.high .vt{color:var(--gn)}
+  .vbox .vb{font-size:13px;line-height:1.65;color:#333}
+  .cstep{margin-bottom:18px}
+  .shdr{display:flex;align-items:center;gap:12px;margin-bottom:8px;flex-wrap:wrap}
+  .sbadge{background:var(--am);color:var(--nv);font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:4px 10px;border-radius:4px;white-space:nowrap}
+  .sbadge.gate{background:var(--gn);color:#fff}
+  .sq{font-size:13px;font-weight:600;color:var(--wh)}
+  .shint{font-size:12px;color:var(--gm);margin-bottom:8px;font-style:italic;padding-left:2px;line-height:1.5}
+  textarea{width:100%;background:var(--nv);border:1px solid rgba(255,255,255,.12);border-radius:6px;color:var(--wh);font-family:'Inter',sans-serif;font-size:13px;line-height:1.7;padding:12px 14px;resize:vertical;transition:border-color .2s;min-height:64px}
+  textarea:focus{outline:none;border-color:var(--am)}
+  textarea::placeholder{color:var(--gm)}
+  textarea.err{border-color:var(--rd)!important}
+  .tcrow{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px}
+  .tc{padding:6px 12px;border-radius:20px;font-size:12px;font-weight:500;background:var(--nv);border:1px solid rgba(255,255,255,.15);color:var(--gl);cursor:pointer;transition:background .15s,border-color .15s,color .15s;user-select:none}
+  .tc.selected{background:var(--am);border-color:var(--am);color:var(--nv);font-weight:700}
+  .p2note{background:var(--nl);border:1px solid rgba(232,160,32,.25);border-radius:6px;padding:12px 16px;font-size:12px;color:var(--al);margin-bottom:20px;line-height:1.55}
+  .examnote{background:rgba(45,90,140,.2);border:1px solid var(--blu);border-radius:6px;padding:12px 16px;font-size:12px;color:#a8c8e8;margin-bottom:20px;line-height:1.6}
+  .examnote strong{color:#cce0f5}
+  .abox{background:#0f1828;border:1px solid var(--am);border-radius:10px;padding:28px;margin-top:32px}
+  .albl{font-size:10px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--am);margin-bottom:16px}
+  .apara{font-size:14px;line-height:1.9;color:var(--gl);font-family:'Lora',serif;font-style:italic;margin-bottom:18px}
+  .apara:last-child{margin-bottom:0}
+  .apara .ptag{display:block;font-family:'Inter',sans-serif;font-style:normal;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--am);margin-bottom:6px}
+  .bv{margin-top:24px;padding:18px 22px;border-radius:8px;display:none}
+  .bv.show{display:block}
+  .bv .bvm{font-size:28px;font-weight:700;font-family:'Lora',serif}
+  .bv .bvl{font-size:13px;margin-top:4px;line-height:1.6}
+  .bv .bvt{margin-top:10px;font-size:12px;padding:10px 14px;border-radius:6px;line-height:1.65}
+  .smi{display:flex;align-items:flex-start;gap:12px;padding:12px 16px;background:var(--nm);border:1px solid rgba(255,255,255,.07);border-radius:6px;margin-bottom:6px;user-select:none}
+  .smi.yes{background:rgba(30,122,74,.12);border-color:var(--gn)}
+  .smi.no{background:rgba(192,57,43,.1);border-color:var(--rd)}
+  .smico{width:22px;height:22px;border-radius:50%;border:2px solid var(--gm);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:12px;transition:all .2s}
+  .smi.yes .smico{background:var(--gn);border-color:var(--gn);color:#fff}
+  .smi.no .smico{background:var(--rd);border-color:var(--rd);color:#fff}
+  .smt{font-size:13px;color:var(--gl);line-height:1.55}
+  .smc{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--am);display:block;margin-bottom:3px}
+  .smtog{display:flex;gap:8px;margin-top:4px}
+  .smb{padding:5px 14px;border-radius:4px;font-size:11px;font-weight:700;cursor:pointer;border:1px solid rgba(255,255,255,.15);background:transparent;color:var(--gl);transition:all .15s}
+  .smb.yb:hover,.smb.yb.active{background:var(--gn);border-color:var(--gn);color:#fff}
+  .smb.nb:hover,.smb.nb.active{background:var(--rd);border-color:var(--rd);color:#fff}
+  .btn{display:inline-block;padding:11px 24px;border-radius:6px;font-size:13px;font-weight:700;cursor:pointer;border:none;transition:opacity .2s,transform .1s;letter-spacing:.02em}
+  .btn:active{transform:scale(.98)}
+  .btnp{background:var(--am);color:var(--nv)}
+  .btnp:hover{opacity:.9}
+  .btnp:disabled{opacity:.35;cursor:not-allowed}
+  .btns{background:transparent;border:1px solid rgba(255,255,255,.25);color:var(--wh);margin-left:10px}
+  .btns:hover{border-color:rgba(255,255,255,.5)}
+  .arow{margin-top:24px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+  hr.div{border:none;border-top:1px solid rgba(255,255,255,.08);margin:32px 0}
+  .pb{height:3px;background:rgba(255,255,255,.08);border-radius:2px;margin-bottom:28px;overflow:hidden}
+  .pf{height:100%;background:var(--am);border-radius:2px;transition:width .4s ease}
+  .ic{background:var(--nl);border:1px solid rgba(255,255,255,.08);border-radius:8px;padding:14px 18px;margin-bottom:20px}
+  .ic .ict{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--am);margin-bottom:8px}
+  .ic p{font-size:13px;color:var(--gl);line-height:1.65}
+  .fc-count{font-size:11px;color:var(--gm);margin-top:4px;transition:color .2s}
+  .fc-count.ok{color:var(--gn)}
+  .fc-count.warn{color:var(--rd)}
+  .lock-bar{background:rgba(192,57,43,.15);border:1px solid var(--rd);border-radius:6px;padding:10px 16px;font-size:12px;color:#f5a0a0;margin-top:16px;display:none}
+  .lock-bar.show{display:block}
+  .modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:999;display:none;align-items:center;justify-content:center}
+  .modal-bg.show{display:flex}
+  .modal{background:var(--nm);border:1px solid var(--am);border-radius:12px;padding:32px;max-width:480px;width:90%;text-align:center}
+  .modal h2{font-family:'Lora',serif;font-size:20px;color:var(--wh);margin-bottom:12px}
+  .modal p{font-size:13px;color:var(--gl);line-height:1.7;margin-bottom:24px}
+  .modal-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+
+  /* PARAGRAPH BLOCK GROUPING — the key visual fix */
+  .pblock{border-radius:12px;padding:24px;margin-bottom:28px;border:2px solid transparent}
+  .pblock.pro{background:rgba(30,122,74,.07);border-color:rgba(30,122,74,.35)}
+  .pblock.con{background:rgba(192,57,43,.07);border-color:rgba(192,57,43,.35)}
+  .pblock.concl{background:rgba(45,90,140,.1);border-color:rgba(45,90,140,.45)}
+  .pblock-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;flex-wrap:wrap;gap:10px}
+  .pblock-title{font-family:'Lora',serif;font-size:17px;font-weight:600;color:var(--wh);display:flex;align-items:center;gap:10px}
+  .pblock-title .pnum{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;font-family:'Inter',sans-serif;flex-shrink:0}
+  .pblock.pro .pnum{background:var(--gn);color:#fff}
+  .pblock.con .pnum{background:var(--rd);color:#fff}
+  .pblock.concl .pnum{background:var(--blu);color:#fff}
+  .pblock-prog{font-size:11px;font-weight:600;color:var(--gm);padding:4px 10px;border-radius:12px;background:rgba(255,255,255,.06)}
+  .pblock-prog.done{color:var(--gn);background:rgba(30,122,74,.18)}
+  .chain-divider{display:flex;align-items:center;gap:10px;margin:20px 0 14px}
+  .chain-divider .cdline{flex:1;height:1px;background:rgba(255,255,255,.1)}
+  .chain-divider .cdlabel{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--gm);white-space:nowrap}
+  .chain-divider:first-child{margin-top:0}
+
+  @media(max-width:600px){header{padding:16px;flex-direction:column;gap:4px}.case-switcher{padding:12px 16px}.pnav{padding:0 12px;overflow-x:auto}main{padding:24px 16px 60px}.exgrid{grid-template-columns:1fr}.pblock{padding:16px}}
+</style>
+</head>
+<body>
+
+<div class="modal-bg" id="ev-modal">
+  <div class="modal">
+    <h2>Before you continue</h2>
+    <p>Does your response include <strong>specific case evidence</strong> — a fact, figure, or exhibit from the case study material — attached to your tool applications?<br><br>If you typed generic sentences without case-specific data, go back and add it now.</p>
+    <div class="modal-btns">
+      <button class="btn btnp" onclick="modalYes()">Yes — my tool sentences use case evidence</button>
+      <button class="btn btns" style="margin-left:0" onclick="modalNo()">No — take me back to fix it</button>
+    </div>
+  </div>
+</div>
+
+<header>
+  <span class="ey">IB Business Management · Papers 1 &amp; 2</span>
+  <h1>10-Mark Essay Builder</h1>
+</header>
+
+<div class="case-switcher">
+  <label for="caseSelect">Case Study:</label>
+  <select id="caseSelect" onchange="switchCase(this.value)"></select>
+</div>
+
+<nav class="pnav">
+  <div class="ptab active" id="tab1" onclick="navClick(1)"><span class="tn">1</span> Diagnose a weak response</div>
+  <div class="ptab locked" id="tab2" onclick="navClick(2)"><span class="tn">2</span> Build your argument</div>
+  <div class="ptab locked" id="tab3" onclick="navClick(3)"><span class="tn">3</span> Your paragraph &amp; mark</div>
+</nav>
+
+<main>
+<!-- ===== PHASE 1 ===== -->
+<div class="phase active" id="phase1">
+  <div class="pb"><div class="pf" id="prog1" style="width:0%"></div></div>
+  <p class="stitle">Phase 1 — Diagnose a Weak Response</p>
+  <p class="ssub">Read the case study and question below. Then read the student response and tick every part of the analysis chain that is present. This is what examiners do before awarding a mark.</p>
+
+  <div class="csbox" id="cs-p1"></div>
+  <div class="qbox" id="q-p1"></div>
+  <div class="wrbox" id="wr-p1"></div>
+
+  <p class="ctitle">Tick every element you can find in the response above:</p>
+  <div id="dc">
+    <div class="ci" onclick="toggleCheck(this)" data-k="point"><div class="cb"></div><div class="ct"><span class="cl">Point</span>A clear argument or position directly answering the question</div></div>
+    <div class="ci" onclick="toggleCheck(this)" data-k="tool"><div class="cb"></div><div class="ct"><span class="cl">Tool — Named</span>A business management tool is mentioned by name</div></div>
+    <div class="ci" onclick="toggleCheck(this)" data-k="tool-applied"><div class="cb"></div><div class="ct"><span class="cl">Tool — Applied</span>The tool is used with specific case evidence (not just named or listed)</div></div>
+    <div class="ci" onclick="toggleCheck(this)" data-k="tmt"><div class="cb"></div><div class="ct"><span class="cl">This Means That…</span>The consequence of the evidence is explained for the business</div></div>
+    <div class="ci" onclick="toggleCheck(this)" data-k="wlt"><div class="cb"></div><div class="ct"><span class="cl">Which Leads To…</span>The logic is extended — impact on stakeholders, strategy, or performance</div></div>
+    <div class="ci" onclick="toggleCheck(this)" data-k="therefore"><div class="cb"></div><div class="ct"><span class="cl">Therefore…</span>A mini-judgement that links back to the question</div></div>
+    <div class="ci" onclick="toggleCheck(this)" data-k="counter"><div class="cb"></div><div class="ct"><span class="cl">Counter-argument</span>A second paragraph arguing the opposing side using a different tool</div></div>
+    <div class="ci" onclick="toggleCheck(this)" data-k="limitation"><div class="cb"></div><div class="ct"><span class="cl">Limitation</span>A limitation of the evidence or tool is acknowledged</div></div>
+  </div>
+  <div class="arow">
+    <button class="btn btnp" onclick="showDiagVerdict()">See what the examiner sees →</button>
+  </div>
+  <div class="vbox" id="dv"></div>
+  <div class="arow" id="d-next" style="display:none">
+    <button class="btn btnp" onclick="unlockAndGo(2)">Now build your own response →</button>
+  </div>
+</div>
+
+<!-- ===== PHASE 2 ===== -->
+<div class="phase" id="phase2">
+  <div class="pb"><div class="pf" id="prog2" style="width:0%"></div></div>
+  <p class="stitle">Phase 2 — Build Your Argument</p>
+  <p class="ssub">Each coloured block below is one paragraph of your final essay. Complete every sentence inside a block before moving to the next one.</p>
+
+  <div class="examnote"><strong>Exam reminder:</strong> in the real exam, ONE full chain per paragraph (two chains total) is enough to reach 5–6 marks. This practice tool asks for a second chain in each paragraph so the skill becomes automatic before exam day — the writing requirement does not change in the exam itself.</div>
+
+  <div class="cs-collapsed" onclick="toggleCaseFull()">
+    <span class="ccl" id="cs-collapsed-label">📋 Case Study (tap to expand the exhibits again)</span>
+    <span class="ccarrow" id="ccarrow">▾</span>
+  </div>
+  <div class="cs-full" id="csfull">
+    <div class="csbox" style="margin-top:0" id="cs-p2"></div>
+  </div>
+
+  <div class="ic">
+    <div class="ict">The Chain — every sentence must do one job</div>
+    <p><strong style="color:var(--am)">Point</strong> → <strong style="color:var(--am)">Tool + case evidence</strong> → <strong style="color:var(--am)">This means that…</strong> → <strong style="color:var(--am)">Which leads to…</strong> → <strong style="color:var(--am)">Therefore…</strong></p>
+  </div>
+  <div class="qbox" id="q-p2"></div>
+
+  <!-- ============ PARAGRAPH 1 BLOCK — PRO ============ -->
+  <div class="pblock pro">
+    <div class="pblock-head">
+      <div class="pblock-title"><span class="pnum">1</span>Paragraph 1 — Supporting the Decision</div>
+      <div class="pblock-prog" id="p1-prog">0 / 10 complete</div>
+    </div>
+
+    <div class="chain-divider"><span class="cdlabel">Pro 1 of 2</span><div class="cdline"></div></div>
+
+    <div class="cstep">
+      <div class="shdr"><span class="sbadge">Point</span><span class="sq">State your argument. No preamble.</span></div>
+      <div class="shint">Start with: "One advantage of…" / "A key argument in favour of… is…"</div>
+      <textarea id="f-s1p" rows="2" placeholder="" oninput="onFieldInput(this,'c-s1p',30)"></textarea>
+      <div class="fc-count" id="c-s1p">Minimum 30 characters</div>
+    </div>
+
+    <div class="cstep">
+      <div class="shdr"><span class="sbadge">Tool — Select one</span></div>
+      <div class="shint">Choose the most relevant tool, then write how it applies using a specific exhibit.</div>
+      <div class="tcrow" id="p1t">
+        <div class="tc" onclick="selTool('p1','SWOT Analysis',this)">SWOT Analysis</div>
+        <div class="tc" onclick="selTool('p1','Ansoff Matrix',this)">Ansoff Matrix</div>
+        <div class="tc" onclick="selTool('p1','BCG Matrix',this)">BCG Matrix</div>
+        <div class="tc" onclick="selTool('p1','STEEPLE Analysis',this)">STEEPLE Analysis</div>
+        <div class="tc" onclick="selTool('p1','Decision Tree',this)">Decision Tree</div>
+        <div class="tc" onclick="selTool('p1','Force Field Analysis',this)">Force Field HL</div>
+        <div class="tc" onclick="selTool('p1','Porter\'s Generic Strategies',this)">Porter's HL</div>
+      </div>
+      <input type="hidden" id="p1tv">
+      <div class="shint" style="margin-top:6px">Include: tool name + a specific figure from the exhibits.</div>
+      <textarea id="f-s1t" rows="3" placeholder="" oninput="onFieldInput(this,'c-s1t',30)"></textarea>
+      <div class="fc-count" id="c-s1t">Minimum 30 characters</div>
+    </div>
+
+    <div class="cstep">
+      <div class="shdr"><span class="sbadge">This means that…</span><span class="sq">What is the consequence for the business?</span></div>
+      <div class="shint">Do not describe the tool again. Explain what this evidence means for the business specifically.</div>
+      <textarea id="f-s1m" rows="2" placeholder="" oninput="onFieldInput(this,'c-s1m',30)"></textarea>
+      <div class="fc-count" id="c-s1m">Minimum 30 characters</div>
+    </div>
+
+    <div class="cstep">
+      <div class="shdr"><span class="sbadge">Which leads to…</span><span class="sq">Extend the logic — who or what is affected?</span></div>
+      <div class="shint">Think: stakeholders, competitive position, financial performance, long-term strategy.</div>
+      <textarea id="f-s1w" rows="2" placeholder="" oninput="onFieldInput(this,'c-s1w',30)"></textarea>
+      <div class="fc-count" id="c-s1w">Minimum 30 characters</div>
+    </div>
+
+    <div class="cstep">
+      <div class="shdr"><span class="sbadge">Therefore…</span><span class="sq">Mini-judgement — link back to the question.</span></div>
+      <div class="shint">Does this evidence support or complicate the decision? Be direct.</div>
+      <textarea id="f-s1f" rows="2" placeholder="" oninput="onFieldInput(this,'c-s1f',30)"></textarea>
+      <div class="fc-count" id="c-s1f">Minimum 30 characters</div>
+    </div>
+
+    <div class="chain-divider"><span class="cdlabel">Pro 2 of 2</span><div class="cdline"></div></div>
+
+    <div class="cstep">
+      <div class="shdr"><span class="sbadge">Point</span><span class="sq">A second, different argument supporting the decision.</span></div>
+      <div class="shint">Do not repeat your first point in different words — find a genuinely separate reason.</div>
+      <textarea id="f-s1bp" rows="2" placeholder="" oninput="onFieldInput(this,'c-s1bp',30)"></textarea>
+      <div class="fc-count" id="c-s1bp">Minimum 30 characters</div>
+    </div>
+
+    <div class="cstep">
+      <div class="shdr"><span class="sbadge">Tool — Select one</span></div>
+      <div class="shint">The same tool can be used again if it fits — there is no mark scheme rule against this — but a different one often gives you more to say.</div>
+      <div class="tcrow" id="p1bt-row">
+        <div class="tc" onclick="selTool('p1b','SWOT Analysis',this)">SWOT Analysis</div>
+        <div class="tc" onclick="selTool('p1b','Ansoff Matrix',this)">Ansoff Matrix</div>
+        <div class="tc" onclick="selTool('p1b','BCG Matrix',this)">BCG Matrix</div>
+        <div class="tc" onclick="selTool('p1b','STEEPLE Analysis',this)">STEEPLE Analysis</div>
+        <div class="tc" onclick="selTool('p1b','Decision Tree',this)">Decision Tree</div>
+        <div class="tc" onclick="selTool('p1b','Force Field Analysis',this)">Force Field HL</div>
+        <div class="tc" onclick="selTool('p1b','Porter\'s Generic Strategies',this)">Porter's HL</div>
+      </div>
+      <input type="hidden" id="p1btv">
+      <div class="shint" style="margin-top:6px">Use a different exhibit or figure from your first tool sentence.</div>
+      <textarea id="f-s1bt" rows="3" placeholder="" oninput="onFieldInput(this,'c-s1bt',30)"></textarea>
+      <div class="fc-count" id="c-s1bt">Minimum 30 characters</div>
+    </div>
+
+    <div class="cstep">
+      <div class="shdr"><span class="sbadge">This means that…</span></div>
+      <textarea id="f-s1bm" rows="2" placeholder="" oninput="onFieldInput(this,'c-s1bm',30)"></textarea>
+      <div class="fc-count" id="c-s1bm">Minimum 30 characters</div>
+    </div>
+
+    <div class="cstep">
+      <div class="shdr"><span class="sbadge">Which leads to…</span></div>
+      <textarea id="f-s1bw" rows="2" placeholder="" oninput="onFieldInput(this,'c-s1bw',30)"></textarea>
+      <div class="fc-count" id="c-s1bw">Minimum 30 characters</div>
+    </div>
+
+    <div class="cstep">
+      <div class="shdr"><span class="sbadge">Therefore…</span></div>
+      <textarea id="f-s1bf" rows="2" placeholder="" oninput="onFieldInput(this,'c-s1bf',30)"></textarea>
+      <div class="fc-count" id="c-s1bf">Minimum 30 characters</div>
+    </div>
+  </div>
+
+  <!-- ============ PARAGRAPH 2 BLOCK — CON ============ -->
+  <div class="pblock con">
+    <div class="pblock-head">
+      <div class="pblock-title"><span class="pnum">2</span>Paragraph 2 — Challenging the Decision</div>
+      <div class="pblock-prog" id="p2-prog">0 / 10 complete</div>
+    </div>
+    <div class="p2note">⚠ Use a <strong>different tool</strong> from §1. Use <strong>different case evidence</strong>. This paragraph must argue the opposing side.</div>
+
+    <div class="chain-divider"><span class="cdlabel">Con 1 of 2</span><div class="cdline"></div></div>
+
+    <div class="cstep">
+      <div class="shdr"><span class="sbadge">Counter-Point</span><span class="sq">Open with "However…" and state the opposing argument.</span></div>
+      <textarea id="f-s2c" rows="2" placeholder="" oninput="onFieldInput(this,'c-s2c',30)"></textarea>
+      <div class="fc-count" id="c-s2c">Minimum 30 characters</div>
+    </div>
+
+    <div class="cstep">
+      <div class="shdr"><span class="sbadge">Tool — Select one (different from §1)</span></div>
+      <div class="tcrow" id="p2t">
+        <div class="tc" onclick="selTool('p2','SWOT Analysis',this)">SWOT Analysis</div>
+        <div class="tc" onclick="selTool('p2','Ansoff Matrix',this)">Ansoff Matrix</div>
+        <div class="tc" onclick="selTool('p2','BCG Matrix',this)">BCG Matrix</div>
+        <div class="tc" onclick="selTool('p2','STEEPLE Analysis',this)">STEEPLE Analysis</div>
+        <div class="tc" onclick="selTool('p2','Decision Tree',this)">Decision Tree</div>
+        <div class="tc" onclick="selTool('p2','Force Field Analysis',this)">Force Field HL</div>
+        <div class="tc" onclick="selTool('p2','Porter\'s Generic Strategies',this)">Porter's HL</div>
+      </div>
+      <input type="hidden" id="p2tv">
+      <div class="shint" style="margin-top:6px">Apply using different case evidence from §1.</div>
+      <textarea id="f-s2t" rows="3" placeholder="" oninput="onFieldInput(this,'c-s2t',30)"></textarea>
+      <div class="fc-count" id="c-s2t">Minimum 30 characters</div>
+    </div>
+
+    <div class="cstep">
+      <div class="shdr"><span class="sbadge">This means that…</span></div>
+      <textarea id="f-s2m" rows="2" placeholder="" oninput="onFieldInput(this,'c-s2m',30)"></textarea>
+      <div class="fc-count" id="c-s2m">Minimum 30 characters</div>
+    </div>
+
+    <div class="cstep">
+      <div class="shdr"><span class="sbadge">Which leads to…</span></div>
+      <textarea id="f-s2w" rows="2" placeholder="" oninput="onFieldInput(this,'c-s2w',30)"></textarea>
+      <div class="fc-count" id="c-s2w">Minimum 30 characters</div>
+    </div>
+
+    <div class="cstep">
+      <div class="shdr"><span class="sbadge">Therefore…</span><span class="sq">Does this counter-evidence outweigh §1?</span></div>
+      <textarea id="f-s2f" rows="2" placeholder="" oninput="onFieldInput(this,'c-s2f',30)"></textarea>
+      <div class="fc-count" id="c-s2f">Minimum 30 characters</div>
+    </div>
+
+    <div class="chain-divider"><span class="cdlabel">Con 2 of 2</span><div class="cdline"></div></div>
+
+    <div class="cstep">
+      <div class="shdr"><span class="sbadge">Counter-Point</span><span class="sq">A second, different concern challenging the decision.</span></div>
+      <div class="shint">Find a genuinely separate risk — not the same concern restated.</div>
+      <textarea id="f-s2bc" rows="2" placeholder="" oninput="onFieldInput(this,'c-s2bc',30)"></textarea>
+      <div class="fc-count" id="c-s2bc">Minimum 30 characters</div>
+    </div>
+
+    <div class="cstep">
+      <div class="shdr"><span class="sbadge">Tool — Select one</span></div>
+      <div class="tcrow" id="p2bt-row">
+        <div class="tc" onclick="selTool('p2b','SWOT Analysis',this)">SWOT Analysis</div>
+        <div class="tc" onclick="selTool('p2b','Ansoff Matrix',this)">Ansoff Matrix</div>
+        <div class="tc" onclick="selTool('p2b','BCG Matrix',this)">BCG Matrix</div>
+        <div class="tc" onclick="selTool('p2b','STEEPLE Analysis',this)">STEEPLE Analysis</div>
+        <div class="tc" onclick="selTool('p2b','Decision Tree',this)">Decision Tree</div>
+        <div class="tc" onclick="selTool('p2b','Force Field Analysis',this)">Force Field HL</div>
+        <div class="tc" onclick="selTool('p2b','Porter\'s Generic Strategies',this)">Porter's HL</div>
+      </div>
+      <input type="hidden" id="p2btv">
+      <div class="shint" style="margin-top:6px">Use a different exhibit or figure from your first counter-point.</div>
+      <textarea id="f-s2bt" rows="3" placeholder="" oninput="onFieldInput(this,'c-s2bt',30)"></textarea>
+      <div class="fc-count" id="c-s2bt">Minimum 30 characters</div>
+    </div>
+
+    <div class="cstep">
+      <div class="shdr"><span class="sbadge">This means that…</span></div>
+      <textarea id="f-s2bm" rows="2" placeholder="" oninput="onFieldInput(this,'c-s2bm',30)"></textarea>
+      <div class="fc-count" id="c-s2bm">Minimum 30 characters</div>
+    </div>
+
+    <div class="cstep">
+      <div class="shdr"><span class="sbadge">Which leads to…</span></div>
+      <textarea id="f-s2bw" rows="2" placeholder="" oninput="onFieldInput(this,'c-s2bw',30)"></textarea>
+      <div class="fc-count" id="c-s2bw">Minimum 30 characters</div>
+    </div>
+
+    <div class="cstep">
+      <div class="shdr"><span class="sbadge">Therefore…</span></div>
+      <textarea id="f-s2bf" rows="2" placeholder="" oninput="onFieldInput(this,'c-s2bf',30)"></textarea>
+      <div class="fc-count" id="c-s2bf">Minimum 30 characters</div>
+    </div>
+  </div>
+
+  <!-- ============ PARAGRAPH 3 BLOCK — CONCLUSION ============ -->
+  <div class="pblock concl">
+    <div class="pblock-head">
+      <div class="pblock-title"><span class="pnum">3</span>Paragraph 3 — Conclusion (7–10 marks available here)</div>
+      <div class="pblock-prog" id="p3-prog">0 / 3 complete</div>
+    </div>
+
+    <div class="cstep">
+      <div class="shdr"><span class="sbadge gate">Weigh — 7–8</span><span class="sq">Which option is better? Make a decision.</span></div>
+      <div class="shint">Start with "On balance…" and refer to both tools by name in the same sentence. This is your judgement — be direct about which side wins.</div>
+      <textarea id="f-s3w" rows="2" placeholder="" oninput="onFieldInput(this,'c-s3w',30)"></textarea>
+      <div class="fc-count" id="c-s3w">Minimum 30 characters</div>
+    </div>
+
+    <div class="cstep">
+      <div class="shdr"><span class="sbadge gate">Stakeholder Impact — 7–8</span><span class="sq">How does this decision affect different stakeholders differently?</span></div>
+      <div class="shint">Required to reach 7–8. Name at least two different stakeholder groups (e.g. employees vs shareholders, customers vs staff) and explain how the impact on each differs — not the same impact repeated twice.</div>
+      <textarea id="f-s3st" rows="3" placeholder="" oninput="onFieldInput(this,'c-s3st',30)"></textarea>
+      <div class="fc-count" id="c-s3st">Minimum 30 characters</div>
+    </div>
+
+    <div class="cstep">
+      <div class="shdr"><span class="sbadge gate">Limitation — 9–10</span><span class="sq">What's missing from the case, and how would it change your decision?</span></div>
+      <div class="shint">Required for 9–10. Name a specific piece of missing data, then state what decision you would have made instead if you had it. E.g. "However, the case study does not provide a cashflow forecast, so had we been given it, [other option] would have been the better choice because…"</div>
+      <textarea id="f-s3l" rows="3" placeholder="" oninput="onFieldInput(this,'c-s3l',30)"></textarea>
+      <div class="fc-count" id="c-s3l">Minimum 30 characters</div>
+    </div>
+  </div>
+
+  <div class="lock-bar" id="lbar">Complete all fields above (minimum 30 characters each) before proceeding.</div>
+  <div class="arow">
+    <button class="btn btnp" id="go3btn" onclick="tryGoPhase3()" disabled>Assemble my response →</button>
+    <button class="btn btns" onclick="unlockAndGo(1)">← Back to diagnosis</button>
+  </div>
+</div>
+
+<!-- ===== PHASE 3 ===== -->
+<div class="phase" id="phase3">
+  <p class="stitle">Phase 3 — Your Response &amp; Mark</p>
+  <p class="ssub">Read your assembled response below — it is shown as three separate paragraphs, exactly as it should appear on the exam paper. Then self-mark it honestly. Tick Yes only if the element genuinely does the job — not if it merely resembles it.</p>
+  <div class="abox" id="aout">
+    <div class="albl">Your assembled response</div>
+    <div class="apara" id="apara1"></div>
+    <div class="apara" id="apara2"></div>
+    <div class="apara" id="apara3"></div>
+  </div>
+  <hr class="div">
+  <p class="ctitle">Self-mark — does your response contain each of these?</p>
+  <p style="font-size:12px;color:var(--gm);margin-bottom:16px">Tap Yes or No for every element. If an element is present but weak or vague, tap No.</p>
+  <div id="smitems">
+    <div class="smi" id="smi-point">
+      <div class="smico" id="sico-point">?</div>
+      <div style="flex:1"><div class="smt"><span class="smc">Point</span>Your §1 opens with a clear, direct argument answering the question — not background context or a definition.</div>
+      <div class="smtog"><button class="smb yb" onclick="smv('point','yes')">Yes ✓</button><button class="smb nb" onclick="smv('point','no')">No ✗</button></div></div>
+    </div>
+    <div class="smi" id="smi-tool-applied">
+      <div class="smico" id="sico-tool-applied">?</div>
+      <div style="flex:1"><div class="smt"><span class="smc">Tool Applied (not just named)</span>Your first tool sentence contains: tool name + a specific fact from the case + what the tool shows. A tool definition or category list does not qualify.</div>
+      <div class="smtog"><button class="smb yb" onclick="smv('tool-applied','yes')">Yes ✓</button><button class="smb nb" onclick="smv('tool-applied','no')">No ✗</button></div></div>
+    </div>
+    <div class="smi" id="smi-tmt">
+      <div class="smico" id="sico-tmt">?</div>
+      <div style="flex:1"><div class="smt"><span class="smc">This Means That…</span>You explain what the tool evidence means specifically for this business — not a restatement of the evidence itself.</div>
+      <div class="smtog"><button class="smb yb" onclick="smv('tmt','yes')">Yes ✓</button><button class="smb nb" onclick="smv('tmt','no')">No ✗</button></div></div>
+    </div>
+    <div class="smi" id="smi-wlt">
+      <div class="smico" id="sico-wlt">?</div>
+      <div style="flex:1"><div class="smt"><span class="smc">Which Leads To…</span>You extend the consequence to stakeholders, competitive position, or strategy — not the same point rephrased.</div>
+      <div class="smtog"><button class="smb yb" onclick="smv('wlt','yes')">Yes ✓</button><button class="smb nb" onclick="smv('wlt','no')">No ✗</button></div></div>
+    </div>
+    <div class="smi" id="smi-second-chain">
+      <div class="smico" id="sico-second-chain">?</div>
+      <div style="flex:1"><div class="smt"><span class="smc">Second chain in each paragraph</span>Both your second pro and second con genuinely add a new point, tool, and consequence — not a repeat of the first chain in different words.</div>
+      <div class="smtog"><button class="smb yb" onclick="smv('second-chain','yes')">Yes ✓</button><button class="smb nb" onclick="smv('second-chain','no')">No ✗</button></div></div>
+    </div>
+    <div class="smi" id="smi-counter">
+      <div class="smico" id="sico-counter">?</div>
+      <div style="flex:1"><div class="smt"><span class="smc">Counter-argument with different tool</span>§2 argues the opposing side using a genuinely different tool and different case evidence from §1.</div>
+      <div class="smtog"><button class="smb yb" onclick="smv('counter','yes')">Yes ✓</button><button class="smb nb" onclick="smv('counter','no')">No ✗</button></div></div>
+    </div>
+    <div class="smi" id="smi-weigh">
+      <div class="smico" id="sico-weigh">?</div>
+      <div style="flex:1"><div class="smt"><span class="smc">Weigh — a decision is made</span>You explicitly state which side is stronger and why, referring to both tools by name.</div>
+      <div class="smtog"><button class="smb yb" onclick="smv('weigh','yes')">Yes ✓</button><button class="smb nb" onclick="smv('weigh','no')">No ✗</button></div></div>
+    </div>
+    <div class="smi" id="smi-stakeholder">
+      <div class="smico" id="sico-stakeholder">?</div>
+      <div style="flex:1"><div class="smt"><span class="smc">Stakeholder impact</span>You name at least two different stakeholder groups and explain how the impact on each genuinely differs.</div>
+      <div class="smtog"><button class="smb yb" onclick="smv('stakeholder','yes')">Yes ✓</button><button class="smb nb" onclick="smv('stakeholder','no')">No ✗</button></div></div>
+    </div>
+    <div class="smi" id="smi-limitation">
+      <div class="smico" id="sico-limitation">?</div>
+      <div style="flex:1"><div class="smt"><span class="smc">Limitation acknowledged</span>You name a specific missing data point AND explain how having it might have changed the decision — not a generic comment about tool limitations.</div>
+      <div class="smtog"><button class="smb yb" onclick="smv('limitation','yes')">Yes ✓</button><button class="smb nb" onclick="smv('limitation','no')">No ✗</button></div></div>
+    </div>
+  </div>
+  <div class="arow">
+    <button class="btn btnp" onclick="showBand()">Show my mark band →</button>
+  </div>
+  <div class="bv" id="bvbox"></div>
+  <div class="arow" style="margin-top:32px">
+    <button class="btn btns" style="margin-left:0" onclick="resetAll()">Start again</button>
+  </div>
+</div>
+</main>
+
+<script>
+// ---- CASE DATA ----
+var _CASES = [{"id": "terrabrew", "name": "TerraBrew Coffee Co. \u2014 International Market Entry", "businessName": "TerraBrew", "csTitle": "TerraBrew Coffee Co.", "csPara1": "TerraBrew is a mid-sized coffee roaster founded eleven years ago in Bristol, UK. The company sources single-origin beans, roasts them in its own facility, and sells through 14 company-owned caf\u00e9s and a growing online store. TerraBrew's brand is built on traceability \u2014 every bag carries the name of the farm and cooperative it came from \u2014 and this has earned it a loyal following among environmentally conscious consumers.", "csPara2": "The UK coffee market has become saturated, with five large chains controlling 62% of caf\u00e9 sales. TerraBrew's domestic like-for-like sales growth has slowed to 1.2% over the past two years. The board is now considering launching TerraBrew in the Netherlands, a market with no direct presence currently, using the same traceable, single-origin product range that has succeeded in the UK.", "exhibits": [{"label": "Exhibit 1 \u2014 Financial Snapshot", "lines": ["Cash reserves: \u00a3840,000", "Average monthly overseas operating cost (estimated): \u00a3210,000", "UK net profit margin: 9%"]}, {"label": "Exhibit 2 \u2014 Market Research", "lines": ["Dutch specialty coffee market growing at 6.8% per year", "3 established local competitors with strong brand loyalty", "No existing TerraBrew distribution network in NL"]}, {"label": "Exhibit 3 \u2014 Workforce", "lines": ["TerraBrew employs 96 staff in the UK", "No Dutch-speaking staff currently employed", "Roasting facility operating at 71% capacity"]}, {"label": "Exhibit 4 \u2014 Brand Position", "lines": ["TerraBrew has a 4.7/5 customer rating in the UK", "Sustainability certification (B Corp) achieved last year", "No brand recognition in the Netherlands"]}], "questionText": "Examine the decision by <strong>TerraBrew</strong> to launch its coffee business in the Netherlands.", "weakResponse": "\"TerraBrew is considering launching its coffee business in the Netherlands. A SWOT analysis shows that the business has many strengths, weaknesses, opportunities and threats. One strength is that the business has a strong brand and is B Corp certified. A weakness is that it does not have Dutch-speaking staff. An opportunity is the growing Dutch coffee market and a threat is the three established competitors. The Ansoff Matrix is a tool used to identify growth strategies. TerraBrew could use market development to enter the new market since it is selling an existing product in a new market. In conclusion, TerraBrew should launch in the Netherlands because the Ansoff Matrix and SWOT analysis both suggest this is a good idea.\"", "diagCorrectBody": "The response names two tools (SWOT and Ansoff) but applies neither. Listing SWOT quadrants is AO1 knowledge, not application \u2014 stating \"a weakness is no Dutch-speaking staff\" never explains what that weakness means for market entry. The Ansoff identification is stated without using Exhibit 1 or Exhibit 2 figures, no consequence chain follows, and the conclusion is assertion rather than judgement.<br><br><strong>Examiner mark: 3\u20134.</strong> Tools named but not applied \u2014 the most common Year 12 failure pattern.", "diagAppliedBody": "Re-read the tool sentences. Naming a tool and listing its categories is not the same as applying it. Application requires: tool name + a specific figure from the exhibits (e.g. the \u00a3840,000 cash reserve, or the \u00a3210,000 monthly cost) + what that figure means for the decision. Neither tool sentence does this.", "s1p": "e.g. One advantage of TerraBrew launching in the Netherlands is that it can access a faster-growing market than its saturated UK base.", "s1t": "e.g. The Ansoff Matrix classifies this as market development \u2014 TerraBrew's existing single-origin product is being sold in a new market. This is supported by Exhibit 2, which shows the Dutch market growing at 6.8% annually, faster than TerraBrew's 1.2% UK growth.", "s1m": "e.g. This means that TerraBrew can pursue growth without the higher risk of diversification, since it is leveraging an already-proven product rather than developing something new.", "s1w": "e.g. \u2026which leads to a stronger financial position that may attract investor confidence and fund the next stage of expansion.", "s1f": "e.g. Therefore, the Ansoff evidence supports international expansion, provided TerraBrew can build a distribution network despite having none in the Netherlands currently (Exhibit 2).", "s1bp": "e.g. A second advantage is that TerraBrew's existing brand strengths could transfer effectively to a new market that values sustainability.", "s1bt": "e.g. A STEEPLE analysis highlights the social factor: Dutch consumers have strong environmental awareness, and Exhibit 4 confirms TerraBrew's B Corp certification achieved last year, which aligns directly with this value.", "s1bm": "e.g. This means that TerraBrew's certification could differentiate it from local competitors who may lack equivalent sustainability credentials.", "s1bw": "e.g. \u2026which leads to a potential premium pricing position, allowing TerraBrew to protect margins even as a newcomer without brand recognition (Exhibit 4).", "s1bf": "e.g. Therefore, the STEEPLE evidence further supports expansion, as TerraBrew's existing brand identity may resonate strongly in this specific market.", "s2c": "e.g. However, a significant risk is that TerraBrew may lack the financial resources to sustain Dutch operations long enough to become profitable.", "s2t": "e.g. A SWOT analysis reveals a key weakness: TerraBrew's cash reserves of \u00a3840,000 cover only 4 months of the estimated \u00a3210,000 monthly overseas operating cost (Exhibit 1).", "s2m": "e.g. This means that any unexpected delay in generating overseas revenue could threaten the firm's short-term liquidity.", "s2w": "e.g. \u2026which leads to a risk of reputational damage if the firm is forced to exit the market early, undermining future expansion attempts.", "s2f": "e.g. Therefore, the SWOT evidence challenges the case for expansion unless TerraBrew secures additional funding or phases its entry before committing further cash reserves.", "s2bc": "e.g. A second concern is that TerraBrew has no existing operational presence or local market knowledge in the Netherlands.", "s2bt": "e.g. The Ansoff Matrix's market development category itself carries inherent risk here \u2014 Exhibit 2 confirms there is no existing TerraBrew distribution network in the Netherlands, unlike its established UK caf\u00e9 network.", "s2bm": "e.g. This means that TerraBrew would need to build distribution, supplier, and retail relationships from scratch, which is slower and costlier than expanding within a familiar market.", "s2bw": "e.g. \u2026which leads to a longer break-even period than initially projected, increasing the strain on the \u00a3840,000 cash reserve identified in Exhibit 1.", "s2bf": "e.g. Therefore, the lack of existing infrastructure further challenges the case for a full launch, strengthening the argument for a smaller pilot approach instead.", "s3w": "e.g. On balance, the SWOT weakness evidence is more compelling than the Ansoff opportunity, because financial exposure is an immediate constraint rather than a strategic choice.", "s3st": "e.g. Shareholders may see short-term profit fall due to upfront costs, while employees benefit from new roles if the launch succeeds; however, if the venture fails, existing UK staff could face cuts to absorb losses, so stakeholder impact differs depending on outcome.", "s3l": "e.g. However, the case study does not provide a cashflow forecast, so had TerraBrew been given one, expanding more cautiously (a smaller pilot launch) might have been the better option as it would not threaten short-term liquidity in the same way as a full launch."}, {"id": "ferrowell", "name": "Ferrowell Engineering \u2014 Make-or-Buy Decision", "businessName": "Ferrowell", "csTitle": "Ferrowell Engineering Ltd.", "csPara1": "Ferrowell Engineering is a precision component manufacturer based in Sheffield, UK, supplying metal brackets and housings to the automotive and aerospace industries. The firm employs 140 staff across two production lines and has built a reputation over eighteen years for tight tolerances and on-time delivery. Ferrowell currently manufactures all components in-house using CNC machinery it owns outright.", "csPara2": "A key supplier relationship has opened the option of outsourcing the housing component line to a manufacturer in Poland, which has quoted a unit cost 22% lower than Ferrowell's current in-house cost. The board must decide whether to continue manufacturing in-house or outsource the housing line, freeing up factory floor space and machinery for higher-margin aerospace contracts.", "exhibits": [{"label": "Exhibit 1 \u2014 Cost Comparison", "lines": ["In-house unit cost: \u00a318.40 per housing", "Polish supplier quoted unit cost: \u00a314.35 per housing (delivered)", "Annual housing volume: 240,000 units"]}, {"label": "Exhibit 2 \u2014 Quality & Lead Time", "lines": ["Polish supplier quality reject rate (industry data): 1.8%", "Ferrowell's current in-house reject rate: 0.4%", "Outsourced lead time: 6 weeks vs 3 days in-house"]}, {"label": "Exhibit 3 \u2014 Workforce Impact", "lines": ["28 staff currently work on the housing line", "No compulsory redundancy clauses in current contracts", "Aerospace contracts require additional machinists with different skill sets"]}, {"label": "Exhibit 4 \u2014 Strategic Position", "lines": ["Aerospace contracts carry 34% higher margin than automotive housings", "Ferrowell holds an AS9100 aerospace quality certification", "Floor space freed by outsourcing: approximately 2,200 sq ft"]}], "questionText": "Examine the decision by <strong>Ferrowell Engineering</strong> to outsource its housing component production to a supplier in Poland.", "weakResponse": "\"Ferrowell Engineering is considering outsourcing its housing production to Poland. A SWOT analysis shows that the business has many strengths, weaknesses, opportunities and threats. One strength is that Ferrowell has an aerospace quality certification. A weakness is that the Polish supplier has a higher reject rate. An opportunity is moving into higher-margin aerospace contracts and a threat is losing control over quality. Porter's Generic Strategies is a tool used to identify competitive strategy. Ferrowell could use cost leadership by outsourcing to Poland since this lowers unit costs. In conclusion, Ferrowell should outsource to Poland because the cost savings and aerospace opportunity both suggest this is a good idea.\"", "diagCorrectBody": "The response names two tools (SWOT and Porter's) but applies neither. Listing SWOT categories is AO1 knowledge, not application \u2014 stating \"a weakness is the higher reject rate\" never explains what that 1.8% figure actually costs Ferrowell or how it compares to the 0.4% in-house rate. The Porter's classification is asserted without using Exhibit 1's cost figures, no consequence chain follows, and the conclusion is assertion rather than judgement.<br><br><strong>Examiner mark: 3\u20134.</strong> Tools named but not applied \u2014 the most common Year 12 failure pattern.", "diagAppliedBody": "Re-read the tool sentences. Naming a tool and listing categories is not the same as applying it. Application requires: tool name + a specific figure from the exhibits (e.g. the \u00a314.35 vs \u00a318.40 unit cost, or the 1.8% reject rate) + what that figure means for the decision. Neither tool sentence does this.", "s1p": "e.g. One advantage of Ferrowell outsourcing housing production is that it can significantly reduce unit costs and redirect resources toward higher-margin work.", "s1t": "e.g. Porter's Generic Strategies suggests this move shifts Ferrowell toward cost leadership on the housing line \u2014 Exhibit 1 shows the Polish unit cost of \u00a314.35 is 22% below the in-house cost of \u00a318.40 across 240,000 units annually.", "s1m": "e.g. This means that Ferrowell could save approximately \u00a3972,000 a year on the housing line alone, freeing significant capital for reinvestment.", "s1w": "e.g. \u2026which leads to the opportunity to redirect the 2,200 sq ft of freed floor space and machinists toward the higher-margin aerospace contracts identified in Exhibit 4.", "s1f": "e.g. Therefore, the cost evidence supports outsourcing, provided the quality risk from the Polish supplier does not offset these savings through rework or reputational damage.", "s1bp": "e.g. A second advantage is that outsourcing frees up capacity that Ferrowell could redirect toward more profitable aerospace work.", "s1bt": "e.g. A BCG Matrix view suggests the housing line behaves like a 'cash cow' \u2014 low growth, low margin \u2014 while Exhibit 4 shows aerospace contracts carry a 34% higher margin, making reallocation strategically sound.", "s1bm": "e.g. This means that the 2,200 sq ft of floor space and the machinists freed from housing production (Exhibit 4) could be redeployed toward higher-value aerospace contracts.", "s1bw": "e.g. \u2026which leads to a stronger long-term competitive position in aerospace, an industry where Ferrowell already holds the AS9100 certification needed to compete credibly (Exhibit 4).", "s1bf": "e.g. Therefore, the BCG evidence further supports outsourcing, as it allows Ferrowell to specialise where its certification gives it a genuine advantage.", "s2c": "e.g. However, a significant risk is that outsourcing could compromise the quality standards Ferrowell has built its eighteen-year reputation on.", "s2t": "e.g. A SWOT analysis reveals a key weakness: the Polish supplier's reject rate of 1.8% is more than four times Ferrowell's current in-house rate of 0.4% (Exhibit 2).", "s2m": "e.g. This means that Ferrowell may face higher warranty claims or returned components, eroding some of the \u00a314.35 unit cost saving through rework and replacement costs.", "s2w": "e.g. \u2026which leads to a risk of damaging client trust in the automotive supply chain, where consistent tolerances are critical to contract renewal.", "s2f": "e.g. Therefore, the quality evidence challenges the case for full outsourcing unless Ferrowell negotiates stricter quality guarantees or retains in-house inspection before final shipment.", "s2bc": "e.g. A second concern is the impact on Ferrowell's existing workforce, who have built specialised skills over many years.", "s2bt": "e.g. A Force Field Analysis would weigh staff morale against cost pressures \u2014 Exhibit 3 confirms 28 staff currently work the housing line, and although there is no compulsory redundancy clause, their roles would still be displaced.", "s2bm": "e.g. This means that Ferrowell risks losing skilled staff to competitors if reassignment to aerospace work is not managed carefully, since aerospace requires different machinist skill sets (Exhibit 3).", "s2bw": "e.g. \u2026which leads to potential retraining costs and a slower transition than the cost savings alone would suggest, since new aerospace skills cannot be developed overnight.", "s2bf": "e.g. Therefore, the workforce evidence further challenges a rapid full outsourcing decision, suggesting a phased transition would manage staff impact more effectively.", "s3w": "e.g. On balance, the cost leadership evidence from Porter's is more compelling in the short term, but the SWOT weakness around quality control could undermine those savings if not actively managed.", "s3st": "e.g. The 28 housing-line employees face job insecurity despite no compulsory redundancy clause, while shareholders benefit from improved margins; customers in the automotive supply chain may experience longer lead times (6 weeks vs 3 days), so stakeholder impact is uneven across the business.", "s3l": "e.g. However, the case study does not provide a defect-cost breakdown, so had Ferrowell been given the actual cost of rework per rejected unit, a phased outsourcing trial might have been the better option as it would limit financial exposure while testing the Polish supplier's real-world reject rate."}, {"id": "haldane", "name": "Haldane & Sons \u2014 Family Business Succession", "businessName": "Haldane & Sons", "csTitle": "Haldane & Sons Joinery", "csPara1": "Haldane & Sons is a family-owned joinery and bespoke furniture business in Edinburgh, founded 34 years ago by Robert Haldane. The company employs 22 staff, including 6 long-serving craftsmen who trained under Robert directly, and has built a strong reputation for handmade kitchens and staircases among high-end residential clients. Robert, now 64, intends to step back from daily operations within the next 18 months.", "csPara2": "Robert's two children both work in the business: Fiona (38), the Operations Director, has run day-to-day operations for nine years and is well respected by the craftsmen, while Callum (33), the Sales Director, has driven a 40% increase in client orders over three years but has clashed with senior craftsmen over turnaround times. The board (Robert, Fiona, Callum, and an external non-executive director) must decide who should become the next Managing Director, or whether to recruit an external candidate instead.", "exhibits": [{"label": "Exhibit 1 \u2014 Staff Survey Results", "lines": ["78% of craftsmen rated Fiona 'very effective' as a leader", "41% of craftsmen rated Callum 'very effective' as a leader", "62% of staff said they would be 'concerned' about an external MD"]}, {"label": "Exhibit 2 \u2014 Financial Performance", "lines": ["Revenue grew 18% under Callum's sales drive (past 3 years)", "Average order turnaround time increased from 11 to 16 weeks", "Staff turnover among craftsmen: 2 resignations in 3 years"]}, {"label": "Exhibit 3 \u2014 Succession Readiness", "lines": ["Fiona holds no formal business qualification", "Callum completed an MBA two years ago", "External candidates in the sector typically expect a 20% salary premium"]}, {"label": "Exhibit 4 \u2014 Ownership Structure", "lines": ["Robert holds 70% of company shares", "Fiona and Callum each hold 15%", "No formal shareholder agreement governs succession decisions"]}], "questionText": "Examine the decision facing <strong>Haldane &amp; Sons</strong> regarding who should succeed Robert Haldane as Managing Director.", "weakResponse": "\"Haldane and Sons is considering who should be the next Managing Director. A SWOT analysis shows that the business has many strengths, weaknesses, opportunities and threats. One strength is that Fiona is well respected by staff. A weakness is that Callum has clashed with senior craftsmen. An opportunity is bringing in Callum's MBA skills and a threat is losing staff if the wrong person is chosen. A Decision Tree is a tool used to make decisions under uncertainty. Haldane and Sons could use a Decision Tree to compare Fiona and Callum as options. In conclusion, Haldane and Sons should choose Fiona because the SWOT analysis suggests this is a good idea.\"", "diagCorrectBody": "The response names two tools (SWOT and Decision Tree) but applies neither. Listing SWOT categories is AO1 knowledge, not application \u2014 stating \"a weakness is that Callum has clashed with staff\" never quantifies this using Exhibit 1's 41% effectiveness rating or explains the consequence. The Decision Tree is named but no probabilities, costs, or expected values from the case are calculated, no consequence chain follows, and the conclusion is assertion rather than judgement.<br><br><strong>Examiner mark: 3\u20134.</strong> Tools named but not applied \u2014 the most common Year 12 failure pattern.", "diagAppliedBody": "Re-read the tool sentences. Naming a tool and listing categories is not the same as applying it. Application requires: tool name + a specific figure from the exhibits (e.g. the 78% vs 41% staff effectiveness ratings, or the 16-week turnaround) + what that figure means for the succession decision. Neither tool sentence does this.", "s1p": "e.g. One advantage of appointing Fiona as Managing Director is that she has demonstrated strong internal leadership credibility that an external hire could not replicate quickly.", "s1t": "e.g. A SWOT analysis identifies staff confidence as a clear strength for Fiona \u2014 Exhibit 1 shows 78% of craftsmen rated her 'very effective' compared to only 41% for Callum.", "s1m": "e.g. This means that appointing Fiona carries lower risk of disruption to the skilled craftsmen who are central to Haldane & Sons' reputation for handmade quality.", "s1w": "e.g. \u2026which leads to greater continuity in production quality and client relationships built over Robert's 34-year tenure, protecting the firm's premium brand position.", "s1f": "e.g. Therefore, the staff confidence evidence supports appointing Fiona, provided she can also develop the commercial skills Callum has shown through his MBA and sales growth.", "s1bp": "e.g. A second advantage is that appointing Fiona reduces the risk of further staff turnover during an already uncertain leadership transition.", "s1bt": "e.g. A Force Field Analysis of driving versus restraining forces shows staff retention as a strong driving force for Fiona \u2014 Exhibit 2 shows only 2 craftsmen resignations in 3 years, a period that included Callum's sales-driven turnaround pressures.", "s1bm": "e.g. This means that the relatively low turnover so far could be at risk if turnaround times keep extending under sales-led pressure, but is more likely to stabilise under Fiona's operational leadership.", "s1bw": "e.g. \u2026which leads to greater protection of Haldane & Sons' core craftsmanship capability, which directly underpins the premium pricing the business depends on.", "s1bf": "e.g. Therefore, the retention evidence further supports appointing Fiona, as stability in the workforce is foundational to the firm's reputation for handmade quality.", "s2c": "e.g. However, a significant concern is that Fiona lacks the formal business qualifications and commercial track record Callum has demonstrated.", "s2t": "e.g. Exhibit 2 shows Callum drove 18% revenue growth over three years, and Exhibit 3 confirms he holds an MBA, while Fiona has no formal business qualification.", "s2m": "e.g. This means that Fiona may be less equipped to manage the financial and strategic demands of the MD role as the business scales beyond its current size.", "s2w": "e.g. \u2026which leads to a risk that Haldane & Sons could lose the commercial momentum built over the past three years if growth-focused decision-making is deprioritised under Fiona's leadership.", "s2f": "e.g. Therefore, the commercial evidence challenges a Fiona-only appointment unless the board considers a joint leadership structure or external commercial support.", "s2bc": "e.g. A second concern is that the lack of a formal shareholder agreement could create governance instability regardless of who is appointed.", "s2bt": "e.g. A STEEPLE analysis highlights the legal factor here \u2014 Exhibit 4 confirms there is no formal shareholder agreement governing succession decisions, despite Robert holding 70% of shares and Fiona and Callum each holding 15%.", "s2bm": "e.g. This means that whichever sibling is appointed, the absence of clear governance rules could allow future disputes over decision-making authority to disrupt the business.", "s2bw": "e.g. \u2026which leads to a risk of long-term family conflict spilling into daily operations, potentially undermining staff confidence in leadership regardless of who holds the MD title.", "s2bf": "e.g. Therefore, the governance evidence further challenges a quick succession decision, suggesting a shareholder agreement should be established alongside any appointment.", "s3w": "e.g. On balance, the staff confidence evidence for Fiona is more compelling than Callum's commercial record, because the 16-week turnaround increase under Callum's sales drive (Exhibit 2) suggests his approach already strains the craftsmen the business depends on.", "s3st": "e.g. Craftsmen would likely benefit from Fiona's appointment through continued stability, while shareholders such as Callum (15% stake) may feel sidelined despite his revenue contribution, and clients could experience improved turnaround times if Fiona prioritises production capacity over aggressive sales growth.", "s3l": "e.g. However, the case study does not provide a formal shareholder agreement on succession (Exhibit 4), so had Haldane & Sons been given clearer governance rules, a structured joint-MD arrangement might have been the better option as it would retain both Fiona's staff credibility and Callum's commercial skills rather than forcing a single choice."}];
+var _curCase = 0;
+
+function renderExhibits(exhibits){
+  var h = '<div class="exgrid">';
+  exhibits.forEach(function(ex){
+    h += '<div class="exbox"><div class="exl">' + ex.label + '</div><div class="exv">' + ex.lines.join('<br>') + '</div></div>';
+  });
+  h += '</div>';
+  return h;
+}
+
+function renderCaseBox(c){
+  return '<div class="csl">📋 Case Study — ' + c.csTitle + '</div><h3>' + c.csTitle + '</h3><p>' + c.csPara1 + '</p><p>' + c.csPara2 + '</p>' + renderExhibits(c.exhibits);
+}
+
+function applyCase(idx){
+  var c = _CASES[idx];
+  _curCase = idx;
+  document.getElementById('cs-p1').innerHTML = renderCaseBox(c);
+  document.getElementById('cs-p2').innerHTML = renderCaseBox(c);
+  document.getElementById('q-p1').innerHTML = '<div class="ql">The Question</div><p>' + c.questionText + ' <strong>[10 marks]</strong></p>';
+  document.getElementById('q-p2').innerHTML = '<div class="ql">Your Question</div><p>' + c.questionText + ' <strong>[10 marks]</strong></p>';
+  document.getElementById('wr-p1').innerHTML = '<div class="wrlbl">⚠ Weak Student Response — read carefully</div><p>' + c.weakResponse + '</p>';
+  document.getElementById('cs-collapsed-label').textContent = '📋 Case Study — ' + c.csTitle + ' (tap to expand the exhibits again)';
+
+  var ph = {
+    'f-s1p':c.s1p,'f-s1t':c.s1t,'f-s1m':c.s1m,'f-s1w':c.s1w,'f-s1f':c.s1f,
+    'f-s1bp':c.s1bp,'f-s1bt':c.s1bt,'f-s1bm':c.s1bm,'f-s1bw':c.s1bw,'f-s1bf':c.s1bf,
+    'f-s2c':c.s2c,'f-s2t':c.s2t,'f-s2m':c.s2m,'f-s2w':c.s2w,'f-s2f':c.s2f,
+    'f-s2bc':c.s2bc,'f-s2bt':c.s2bt,'f-s2bm':c.s2bm,'f-s2bw':c.s2bw,'f-s2bf':c.s2bf,
+    'f-s3w':c.s3w,'f-s3st':c.s3st,'f-s3l':c.s3l
+  };
+  for(var id in ph){ document.getElementById(id).placeholder = ph[id]; }
+}
+
+function switchCase(idx){
+  idx = parseInt(idx,10);
+  applyCase(idx);
+}
+
+function initCaseSelect(){
+  var sel = document.getElementById('caseSelect');
+  _CASES.forEach(function(c,i){
+    var opt = document.createElement('option');
+    opt.value = i;
+    opt.textContent = c.name;
+    sel.appendChild(opt);
+  });
+  applyCase(0);
+}
+
+// ---- ANTI-TAMPER ----
+(function(){
+  document.addEventListener('contextmenu',function(e){e.preventDefault();return false});
+  document.addEventListener('keydown',function(e){
+    if(e.key==='F12'){e.preventDefault();return false}
+    if((e.ctrlKey||e.metaKey)&&e.shiftKey&&['I','i','J','j','C','c'].includes(e.key)){e.preventDefault();return false}
+    if((e.ctrlKey||e.metaKey)&&['U','u'].includes(e.key)){e.preventDefault();return false}
+  });
+  setInterval(function(){(function(){})['constructor']('debugger')()},2000);
+  setInterval(function(){try{console.clear();console.log('%cNothing to see here.','color:#1a2340')}catch(x){}},1500);
+  var _dt=false;
+  setInterval(function(){
+    var t=window.outerHeight-window.innerHeight>160||window.outerWidth-window.innerWidth>160;
+    if(t&&!_dt){_dt=true;document.body.style.filter='blur(8px)';document.body.style.pointerEvents='none'}
+    else if(!t&&_dt){_dt=false;document.body.style.filter='';document.body.style.pointerEvents=''}
+  },800);
+})();
+
+// ---- SCORING ENGINE (encoded) ----
+var _sc='W3siaWQiOiAicjEiLCAiY2hlY2siOiAiTk9UOnRvb2wtYXBwbGllZCIsICJtYXJrcyI6ICIzXHUyMDEzNCIsICJjb2xvdXIiOiAiI2MwMzkyYiIsICJiZyI6ICIjZmRlOGU2IiwgImxhYmVsIjogIlRvb2wgbmFtZWQgYnV0IG5vdCBhcHBsaWVkLiBUaGlzIGlzIHRoZSBjZWlsaW5nIGF0IHRoaXMgYmFuZC4iLCAidGlwIjogIkdvIGJhY2sgdG8geW91ciB0b29sIHNlbnRlbmNlLiBBZGQgYSBzcGVjaWZpYyBmaWd1cmUgZnJvbSB0aGUgZXhoaWJpdHMsIHRoZW4gd3JpdGUgd2hhdCB0aGF0IGZpZ3VyZSBtZWFucyBmb3IgdGhlIGJ1c2luZXNzLiBOb3RoaW5nIGVsc2UgaW1wcm92ZXMgeW91ciBtYXJrIHVudGlsIHRoaXMgaXMgZG9uZS4ifSwgeyJpZCI6ICJyMiIsICJjaGVjayI6ICJ0b29sLWFwcGxpZWQ6Tk9UOnRtdCIsICJtYXJrcyI6ICI0XHUyMDEzNSIsICJjb2xvdXIiOiAiI2U4YTAyMCIsICJiZyI6ICIjZmRmM2UwIiwgImxhYmVsIjogIlRvb2wgYXBwbGllZCwgYnV0IHRoZSBjb25zZXF1ZW5jZSBjaGFpbiBzdG9wcyBpbW1lZGlhdGVseSBhZnRlci4iLCAidGlwIjogIllvdSBhdHRhY2hlZCBjYXNlIGV2aWRlbmNlIHRvIGEgdG9vbCBcdTIwMTQgdGhhdCBpcyB0aGUgaGFyZGVzdCBzdGVwLiBOb3cgd3JpdGUgd2hhdCBpdCBtZWFucyBmb3IgdGhlIGJ1c2luZXNzLiBTdGFydCB5b3VyIG5leHQgc2VudGVuY2Ugd2l0aCBcdTIwMWNUaGlzIG1lYW5zIHRoYXRcdTIwMjZcdTIwMWQgYW5kIGV4cGxhaW4gdGhlIGNvbnNlcXVlbmNlLCBub3QgdGhlIGV2aWRlbmNlIGFnYWluLiJ9LCB7ImlkIjogInIzIiwgImNoZWNrIjogInRvb2wtYXBwbGllZDp0bXQ6Tk9UOndsdCIsICJtYXJrcyI6ICI0XHUyMDEzNSIsICJjb2xvdXIiOiAiI2U4YTAyMCIsICJiZyI6ICIjZmRmM2UwIiwgImxhYmVsIjogIk9uZSBjaGFpbiBwcmVzZW50IGJ1dCBub3QgZXh0ZW5kZWQuIFRoZSBsb2dpYyBzdG9wcyBiZWZvcmUgcmVhY2hpbmcgYSBzdGFrZWhvbGRlciwgc3RyYXRlZ2ljLCBvciBmaW5hbmNpYWwgY29uc2VxdWVuY2UuIiwgInRpcCI6ICJBZGQgYSBcdTIwMWNXaGljaCBsZWFkcyB0b1x1MjAyNlx1MjAxZCBzZW50ZW5jZSB0aGF0IGNvbm5lY3RzIHRoZSBjb25zZXF1ZW5jZSB0byBzdGFrZWhvbGRlcnMsIGNvbXBldGl0aXZlIHBvc2l0aW9uLCBvciBmaW5hbmNpYWwgcGVyZm9ybWFuY2UuIn0sIHsiaWQiOiAicjQiLCAiY2hlY2siOiAidG9vbC1hcHBsaWVkOnRtdDp3bHQ6Tk9UOnNlY29uZC1jaGFpbiIsICJtYXJrcyI6ICI1IiwgImNvbG91ciI6ICIjZThhMDIwIiwgImJnIjogIiNmZGYzZTAiLCAibGFiZWwiOiAiT25lIGZ1bGwgY2hhaW4gKHBvaW50IFx1MjE5MiB0b29sIFx1MjE5MiBjb25zZXF1ZW5jZSBcdTIxOTIgZXh0ZW5zaW9uKSBpcyBwcmVzZW50LiBJbiB0aGUgZXhhbSwgdGhpcyBhbG9uZSBjYW4gcmVhY2ggNVx1MjAxMzYuIEluIHByYWN0aWNlIG1vZGUsIGEgc2Vjb25kIGNoYWluIGlzIHJlcXVpcmVkIGluIGVhY2ggcGFyYWdyYXBoIHRvIGZ1bGx5IGJ1aWxkIHRoZSBoYWJpdC4iLCAidGlwIjogIkV4YW0gcmVtaW5kZXI6IG9ubHkgT05FIGNoYWluIHBlciBwYXJhZ3JhcGggKHR3byBjaGFpbnMgdG90YWwpIGlzIHJlcXVpcmVkIGZvciA1XHUyMDEzNiBtYXJrcyBpbiB0aGUgcmVhbCBleGFtLiBUaGlzIHByYWN0aWNlIHRvb2wgYXNrcyBmb3IgYSBzZWNvbmQgY2hhaW4gaW4gZWFjaCBwYXJhZ3JhcGggdG8gbWFrZSBzdXJlIHRoZSBza2lsbCBpcyBmdWxseSBhdXRvbWF0aWMgYmVmb3JlIGV4YW0gZGF5LiJ9LCB7ImlkIjogInI1IiwgImNoZWNrIjogInRvb2wtYXBwbGllZDp0bXQ6d2x0OnNlY29uZC1jaGFpbjpOT1Q6Y291bnRlciIsICJtYXJrcyI6ICI1XHUyMDEzNiIsICJjb2xvdXIiOiAiI2U4YTAyMCIsICJiZyI6ICIjZmRmM2UwIiwgImxhYmVsIjogIlR3byBmdWxsIGNoYWlucyB3aXRoaW4gb25lIHBhcmFncmFwaCBcdTIwMTQgc3Ryb25nIHNpbmdsZS1zaWRlZCBkZXB0aC4gTm8gY291bnRlci1hcmd1bWVudCBwYXJhZ3JhcGggeWV0LiIsICJ0aXAiOiAiVGhpcyBpcyB0aGUgNVx1MjAxMzYgY2VpbGluZyBmb3IgYSBvbmUtc2lkZWQgcmVzcG9uc2UsIGZ1bGx5IGJ1aWx0IG91dC4gVGhlIGNvdW50ZXItYXJndW1lbnQgcGFyYWdyYXBoIGlzIHJlcXVpcmVkIHRvIG1vdmUgYmV5b25kIHRoaXMgYmFuZCBcdTIwMTQgaXQgbXVzdCBhcmd1ZSB0aGUgb3Bwb3Npbmcgc2lkZSB1c2luZyBhIGRpZmZlcmVudCB0b29sIGFuZCBkaWZmZXJlbnQgY2FzZSBldmlkZW5jZS4ifSwgeyJpZCI6ICJyNiIsICJjaGVjayI6ICJ0b29sLWFwcGxpZWQ6dG10OndsdDpzZWNvbmQtY2hhaW46Y291bnRlcjpOT1Q6d2VpZ2giLCAibWFya3MiOiAiNlx1MjAxMzciLCAiY29sb3VyIjogIiNlOGEwMjAiLCAiYmciOiAiI2ZkZjNlMCIsICJsYWJlbCI6ICJCb3RoIHBhcmFncmFwaHMgcHJlc2VudCB3aXRoIGRlcHRoLCBidXQgdGhlcmUgaXMgbm8gZGVjaXNpb24gYWJvdXQgd2hpY2ggYXJndW1lbnQgaXMgc3Ryb25nZXIuIiwgInRpcCI6ICJUbyBtb3ZlIGludG8gdGhlIHRvcCBiYW5kcyB5b3UgbXVzdCBleHBsaWNpdGx5IHdlaWdoIHRoZSB0d28gcGFyYWdyYXBocyBhZ2FpbnN0IGVhY2ggb3RoZXIgYW5kIHNheSB3aGljaCBpcyBtb3JlIGNvbnZpbmNpbmcsIGFuZCB3aHkuIFx1MjAxY09uIGJhbGFuY2VcdTIwMjZcdTIwMWQgaXMgdGhlIHNlbnRlbmNlIG9wZW5lciB0byB1c2UuIn0sIHsiaWQiOiAicjciLCAiY2hlY2siOiAidG9vbC1hcHBsaWVkOnRtdDp3bHQ6c2Vjb25kLWNoYWluOmNvdW50ZXI6d2VpZ2g6Tk9UOnN0YWtlaG9sZGVyIiwgIm1hcmtzIjogIjciLCAiY29sb3VyIjogIiMxZTdhNGEiLCAiYmciOiAiI2Q0ZjBlMiIsICJsYWJlbCI6ICJZb3UgaGF2ZSBtYWRlIGEgZGVjaXNpb24sIGJ1dCBoYXZlIG5vdCBjb25zaWRlcmVkIGhvdyBpdCBhZmZlY3RzIHN0YWtlaG9sZGVycyBkaWZmZXJlbnRseS4gVGhpcyBjYXBzIHRoZSByZXNwb25zZSBqdXN0IGJlbG93IHRoZSB0b3Agb2YgdGhpcyBiYW5kLiIsICJ0aXAiOiAiQWRkIGEgc2VudGVuY2UgZXhwbGFpbmluZyBob3cgeW91ciByZWNvbW1lbmRlZCBkZWNpc2lvbiBhZmZlY3RzIGF0IGxlYXN0IHR3byBkaWZmZXJlbnQgc3Rha2Vob2xkZXIgZ3JvdXBzIGRpZmZlcmVudGx5IFx1MjAxNCBmb3IgZXhhbXBsZSBzaGFyZWhvbGRlcnMgdmVyc3VzIGVtcGxveWVlcywgb3IgY3VzdG9tZXJzIHZlcnN1cyBzdGFmZi4gVGhpcyBpcyByZXF1aXJlZCB0byByZWFjaCA3XHUyMDEzOCBjb25zaXN0ZW50bHkuIn0sIHsiaWQiOiAicjgiLCAiY2hlY2siOiAidG9vbC1hcHBsaWVkOnRtdDp3bHQ6c2Vjb25kLWNoYWluOmNvdW50ZXI6d2VpZ2g6c3Rha2Vob2xkZXI6Tk9UOmxpbWl0YXRpb24iLCAibWFya3MiOiAiN1x1MjAxMzgiLCAiY29sb3VyIjogIiMxZTdhNGEiLCAiYmciOiAiI2Q0ZjBlMiIsICJsYWJlbCI6ICJUd28gdG9vbHMgYXBwbGllZCB3aXRoIGZ1bGwgZGVwdGggaW4gZWFjaCBwYXJhZ3JhcGgsIGEgY2xlYXIgZGVjaXNpb24sIGFuZCBzdGFrZWhvbGRlciBpbXBhY3QgY29uc2lkZXJlZCBcdTIwMTQgdGhpcyBpcyBhIHN0cm9uZyA3XHUyMDEzOCByZXNwb25zZS4iLCAidGlwIjogIlRvIHJlYWNoIHRoZSB0b3AgYmFuZCwgYWRkIG9uZSBzcGVjaWZpYyBsaW1pdGF0aW9uIGluIHlvdXIgY29uY2x1c2lvbi4gTmFtZSB0aGUgZGF0YSB0aGF0IGlzIG1pc3NpbmcgZnJvbSB0aGUgY2FzZSBzdHVkeSwgdGhlbiBleHBsYWluIGhvdyBoYXZpbmcgdGhhdCBkYXRhIG1pZ2h0IGhhdmUgY2hhbmdlZCB5b3VyIGRlY2lzaW9uLiBHZW5lcmljIHN0YXRlbWVudHMgYWJvdXQgdG9vbCBsaW1pdGF0aW9ucyBkbyBub3QgY291bnQuIn0sIHsiaWQiOiAicjkiLCAiY2hlY2siOiAidG9vbC1hcHBsaWVkOnRtdDp3bHQ6c2Vjb25kLWNoYWluOmNvdW50ZXI6d2VpZ2g6c3Rha2Vob2xkZXI6bGltaXRhdGlvbiIsICJtYXJrcyI6ICI5XHUyMDEzMTAiLCAiY29sb3VyIjogIiMxZTdhNGEiLCAiYmciOiAiI2Q0ZjBlMiIsICJsYWJlbCI6ICJGdWxsIGNoYWluIHByZXNlbnQgYWNyb3NzIGJvdGggcGFyYWdyYXBocyB3aXRoIGRvdWJsZSBkZXB0aCwgYSB3ZWlnaGVkIGRlY2lzaW9uLCBzdGFrZWhvbGRlciBpbXBhY3QsIGFuZCBhIHNwZWNpZmljIGxpbWl0YXRpb24gd2l0aCBpdHMgZWZmZWN0IG9uIHRoZSBkZWNpc2lvbiBcdTIwMTQgdGhpcyBpcyBhIDlcdTIwMTMxMCByZXNwb25zZS4iLCAidGlwIjogIkJlZm9yZSBzdWJtaXNzaW9uLCBjaGVjayB0aGF0IHlvdXIgbGltaXRhdGlvbiBzZW50ZW5jZSBkb2VzIHR3byB0aGluZ3M6IG5hbWVzIHRoZSBtaXNzaW5nIGRhdGEgc3BlY2lmaWNhbGx5LCBhbmQgZXhwbGFpbnMgaG93IGhhdmluZyBpdCBtaWdodCBoYXZlIGNoYW5nZWQgeW91ciByZWNvbW1lbmRhdGlvbi4gQSBsaW1pdGF0aW9uIHdpdGhvdXQgdGhpcyBzZWNvbmQgcGFydCB3aWxsIG5vdCByZWxpYWJseSByZWFjaCB0aGUgdG9wIGJhbmQuIn1d';
+function _evalR(st){
+  var rules=JSON.parse(atob(_sc));
+  for(var i=0;i<rules.length;i++){
+    var r=rules[i];
+    var parts=r.check.split(':');
+    var match=true;
+    var j=0;
+    while(j<parts.length){
+      if(parts[j]==='NOT'){
+        j++;
+        if(st[parts[j]]==='yes'){match=false;break}
+      } else {
+        if(st[parts[j]]!=='yes'){match=false;break}
+      }
+      j++;
+    }
+    if(match)return r;
+  }
+  return rules[0];
+}
+
+// ---- STATE ----
+var _ds={},_ss={},_cp=1,_p2unlocked=false,_p3unlocked=false;
+var _flds=['f-s1p','f-s1t','f-s1m','f-s1w','f-s1f','f-s1bp','f-s1bt','f-s1bm','f-s1bw','f-s1bf',
+           'f-s2c','f-s2t','f-s2m','f-s2w','f-s2f','f-s2bc','f-s2bt','f-s2bm','f-s2bw','f-s2bf',
+           'f-s3w','f-s3st','f-s3l'];
+var _p1fields=['f-s1p','f-s1t','f-s1m','f-s1w','f-s1f','f-s1bp','f-s1bt','f-s1bm','f-s1bw','f-s1bf'];
+var _p2fields=['f-s2c','f-s2t','f-s2m','f-s2w','f-s2f','f-s2bc','f-s2bt','f-s2bm','f-s2bw','f-s2bf'];
+var _p3fields=['f-s3w','f-s3st','f-s3l'];
+var _MIN=30;
+
+// ---- CASE STUDY TOGGLE ----
+function toggleCaseFull(){
+  var el=document.getElementById('csfull');
+  var ar=document.getElementById('ccarrow');
+  el.classList.toggle('show');
+  ar.style.transform=el.classList.contains('show')?'rotate(180deg)':'rotate(0deg)';
+}
+
+// ---- FIELD VALIDATION ----
+function onFieldInput(el,cid,min){
+  var v=el.value.trim().length;
+  var c=document.getElementById(cid);
+  if(v>=min){c.textContent='✓ Good';c.className='fc-count ok';el.classList.remove('err')}
+  else{c.textContent=(min-v)+' more characters needed';c.className='fc-count warn';el.classList.add('err')}
+  updateP2Progress();
+  updateBlockProgress();
+  checkP2Lock();
+}
+
+function countDone(ids){
+  return ids.filter(function(id){return document.getElementById(id).value.trim().length>=_MIN}).length;
+}
+
+function updateBlockProgress(){
+  var p1done=countDone(_p1fields), p2done=countDone(_p2fields), p3done=countDone(_p3fields);
+  var p1el=document.getElementById('p1-prog'), p2el=document.getElementById('p2-prog'), p3el=document.getElementById('p3-prog');
+  p1el.textContent=p1done+' / 10 complete';
+  p2el.textContent=p2done+' / 10 complete';
+  p3el.textContent=p3done+' / 3 complete';
+  p1el.className='pblock-prog'+(p1done===10?' done':'');
+  p2el.className='pblock-prog'+(p2done===10?' done':'');
+  p3el.className='pblock-prog'+(p3done===3?' done':'');
+}
+
+function checkP2Lock(){
+  var allOk=_flds.every(function(id){
+    return document.getElementById(id).value.trim().length>=_MIN;
+  });
+  var btn=document.getElementById('go3btn');
+  var bar=document.getElementById('lbar');
+  btn.disabled=!allOk;
+  bar.className=allOk?'lock-bar':'lock-bar show';
+}
+
+function updateP2Progress(){
+  var filled=countDone(_flds);
+  document.getElementById('prog2').style.width=(filled/_flds.length*100)+'%';
+}
+
+// ---- PHASE NAV ----
+function navClick(n){
+  if(n===2&&!_p2unlocked)return;
+  if(n===3&&!_p3unlocked)return;
+  goPhase(n);
+}
+
+function unlockAndGo(n){
+  if(n===2)_p2unlocked=true;
+  goPhase(n);
+}
+
+function goPhase(n){
+  document.querySelectorAll('.phase').forEach(function(p){p.classList.remove('active')});
+  document.querySelectorAll('.ptab').forEach(function(t){t.classList.remove('active')});
+  document.getElementById('phase'+n).classList.add('active');
+  var tab=document.getElementById('tab'+n);
+  tab.classList.remove('locked');
+  tab.classList.add('active');
+  _cp=n;
+  if(n===3)assembleResponse();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// ---- EVIDENCE MODAL ----
+function tryGoPhase3(){
+  document.getElementById('ev-modal').classList.add('show');
+}
+function modalYes(){
+  document.getElementById('ev-modal').classList.remove('show');
+  _p3unlocked=true;
+  goPhase(3);
+}
+function modalNo(){
+  document.getElementById('ev-modal').classList.remove('show');
+}
+
+// ---- DIAGNOSIS ----
+function toggleCheck(el){
+  el.classList.toggle('checked');
+  _ds[el.dataset.k]=el.classList.contains('checked');
+  var total=document.querySelectorAll('#dc .ci').length;
+  var chk=document.querySelectorAll('#dc .ci.checked').length;
+  document.getElementById('prog1').style.width=(chk/total*100)+'%';
+}
+
+function showDiagVerdict(){
+  var box=document.getElementById('dv');
+  box.className='vbox show';
+  var c=_CASES[_curCase];
+  var tN=_ds['tool'],tA=_ds['tool-applied'],tm=_ds['tmt'],wl=_ds['wlt'],ct=_ds['counter'],lm=_ds['limitation'];
+  var correct=tN&&!tA&&!tm&&!wl&&!ct&&!lm;
+  if(correct){
+    box.classList.add('mid');
+    box.innerHTML='<div class="vt">✓ Correct — you identified the core problem</div><div class="vb">'+c.diagCorrectBody+'</div>';
+  } else if(tA){
+    box.classList.add('low');
+    box.innerHTML='<div class="vt">Check again — the tool is not actually applied</div><div class="vb">'+c.diagAppliedBody+'</div>';
+  } else {
+    box.classList.add('low');
+    box.innerHTML='<div class="vt">Look more carefully at what is missing</div><div class="vb">Go back and re-read each sentence. Ask: does this sentence do the job named in the label, or does it only look like it does? The most common error is ticking Tool — Applied when the tool is only named.</div>';
+  }
+  document.getElementById('d-next').style.display='flex';
+}
+
+// ---- TOOL SELECTION ----
+function selTool(para,tool,el){
+  var rowId = para+(para.indexOf('b')>-1?'t-row':'t');
+  var row=document.getElementById(rowId);
+  row.querySelectorAll('.tc').forEach(function(c){c.classList.remove('selected')});
+  el.classList.add('selected');
+  document.getElementById(para+'tv').value=tool;
+}
+
+// ---- ASSEMBLE (3 distinct paragraphs) ----
+function assembleResponse(){
+  var g=function(id){return document.getElementById(id).value.trim()};
+  var para1=[g('f-s1p'),g('f-s1t'),g('f-s1m'),g('f-s1w'),g('f-s1f'),g('f-s1bp'),g('f-s1bt'),g('f-s1bm'),g('f-s1bw'),g('f-s1bf')].filter(Boolean).join(' ');
+  var para2=[g('f-s2c'),g('f-s2t'),g('f-s2m'),g('f-s2w'),g('f-s2f'),g('f-s2bc'),g('f-s2bt'),g('f-s2bm'),g('f-s2bw'),g('f-s2bf')].filter(Boolean).join(' ');
+  var para3=[g('f-s3w'),g('f-s3st'),g('f-s3l')].filter(Boolean).join(' ');
+
+  var el1=document.getElementById('apara1'), el2=document.getElementById('apara2'), el3=document.getElementById('apara3');
+  el1.innerHTML = '<span class="ptag">Paragraph 1 — Supporting the Decision</span>' + (para1 || '[Nothing written — return to Phase 2]');
+  el2.innerHTML = '<span class="ptag">Paragraph 2 — Challenging the Decision</span>' + (para2 || '[Nothing written — return to Phase 2]');
+  el3.innerHTML = '<span class="ptag">Paragraph 3 — Conclusion</span>' + (para3 || '[Nothing written — return to Phase 2]');
+}
+
+// ---- SELF MARK ----
+function smv(key,val){
+  _ss[key]=val;
+  var ico=document.getElementById('sico-'+key);
+  ico.textContent=val==='yes'?'✓':'✗';
+  var row=ico.closest('.smi');
+  row.classList.remove('yes','no');
+  row.classList.add(val);
+  row.querySelectorAll('.smb').forEach(function(b){b.classList.remove('active')});
+  var ab=row.querySelector('.'+val[0]+'b');
+  if(ab)ab.classList.add('active');
+}
+
+// ---- BAND VERDICT ----
+function showBand(){
+  if(Object.keys(_ss).length<9){alert('Please answer Yes or No for every element before seeing your mark band.');return}
+  var r=_evalR(_ss);
+  var box=document.getElementById('bvbox');
+  box.className='bv show';
+  box.style.background=r.bg;
+  box.style.borderLeft='4px solid '+r.colour;
+  box.innerHTML='<div class="bvm" style="color:'+r.colour+'">'+r.marks+' marks</div><div class="bvl" style="color:#333;margin-top:6px">'+r.label+'</div><div class="bvt" style="background:rgba(0,0,0,.06);color:#333">'+r.tip+'</div>';
+}
+
+// ---- RESET ----
+function resetAll(){
+  document.querySelectorAll('textarea').forEach(function(t){t.value=''});
+  document.querySelectorAll('.ci').forEach(function(c){c.classList.remove('checked')});
+  document.querySelectorAll('.tc').forEach(function(c){c.classList.remove('selected')});
+  ['p1tv','p1btv','p2tv','p2btv'].forEach(function(id){document.getElementById(id).value=''});
+  document.getElementById('dv').className='vbox';
+  document.getElementById('d-next').style.display='none';
+  document.getElementById('bvbox').className='bv';
+  document.querySelectorAll('.smico').forEach(function(i){i.textContent='?'});
+  document.querySelectorAll('.smi').forEach(function(i){i.classList.remove('yes','no')});
+  document.querySelectorAll('.smb').forEach(function(b){b.classList.remove('active')});
+  document.querySelectorAll('.fc-count').forEach(function(c){c.textContent='Minimum 30 characters';c.className='fc-count'});
+  document.querySelectorAll('textarea').forEach(function(t){t.classList.remove('err')});
+  document.getElementById('go3btn').disabled=true;
+  document.getElementById('lbar').className='lock-bar';
+  for(var k in _ss)delete _ss[k];
+  for(var k in _ds)delete _ds[k];
+  _p2unlocked=false;_p3unlocked=false;
+  document.getElementById('prog1').style.width='0%';
+  document.getElementById('prog2').style.width='0%';
+  document.getElementById('tab2').className='ptab locked';
+  document.getElementById('tab3').className='ptab locked';
+  updateBlockProgress();
+  goPhase(1);
+}
+
+// Init
+initCaseSelect();
+checkP2Lock();
+updateBlockProgress();
+</script>
+</body>
+</html>
